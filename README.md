@@ -357,6 +357,17 @@ This returns the global error state for the upload instance.
 ~~~
 
 
+### remove
+
+Used for removing a single file from the `files` arrays.
+
+* This will remove the file from all files arrays where it exists.
+
+~~~
+$upload.remove('product-gallery', file);
+~~~
+
+
 
 
 ## Options
