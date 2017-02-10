@@ -81,6 +81,12 @@ module.exports = function () {
 
         // Run top level validation.
         if (uploader.options.multiple && ! _validateMultipleFiles.call(this, name, _files)) {
+
+            // If error, still fire off the onSelect.
+            if (uploader.options.onSelect) {
+                uploader.options.onSelect.call(uploader.ctx);
+            }
+
             return;
         }
 
@@ -113,19 +119,23 @@ module.exports = function () {
             uploader.meta.percentComplete = 0;
         }
 
-        // Fire off events.
-        // TODO: This is redundant, but leaving it for now in case it moves later.
+        // Fire off files to queue.
+        for (i = 0, ii = queueFiles.length; i < ii; i++) {
+            (function (file) { _queueFile.call(_this, name, file); })(queueFiles[i]);
+        }
+
+        // If not errors fire off onSelect all the way here.
         if (uploader.options.onSelect) {
             uploader.options.onSelect.call(uploader.ctx, queueFiles);
         }
 
-        if (uploader.options.onStart) {
-            uploader.options.onStart.call(uploader.ctx, queueFiles);
-        }
+        // If on select fire off right away.
+        if (uploader.options.startOnSelect) {
+            if (uploader.meta.status !== 'sending' && uploader.options.onStart) {
+                uploader.options.onStart.call(uploader.ctx);
+            }
 
-        // Fire off files to queue.
-        for (i = 0, ii = queueFiles.length; i < ii; i++) {
-            (function (file) { _queueFile.call(_this, name, file); })(queueFiles[i]);
+            _processQueue.call(this, name);
         }
     }
 
@@ -227,10 +237,6 @@ module.exports = function () {
 
         if (uploader.options.onQueue) {
             uploader.options.onQueue.call(uploader.ctx, file);
-        }
-
-        if (uploader.options.startOnSelect) {
-            _processQueue.call(this, name);
         }
     }
 
