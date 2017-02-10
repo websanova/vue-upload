@@ -549,11 +549,34 @@ module.exports = function () {
         return (this.watch.uploaders[name] || {}).errors || [];
     };
 
-    Upload.prototype.options = function (name, key, val) {
-        var options,
-            uploader = this.watch.uploaders[name];
+    Upload.prototype.remove = function (name, file) {
+        var i,
+            index,
+            files,
+            uploader;
+
+        if ( ! file) {
+            return;
+        }
 
         name = _toCamelCase(name);
+        uploader = this.watch.uploaders[name];
+        files = uploader.files || {};
+
+        for (i in files) {
+            index = files[i].indexOf(file);
+
+            if (index > -1) {
+                files[i].splice(index, 1);
+            }
+        }
+    };
+
+    Upload.prototype.options = function (name, key, val) {
+        var options,
+
+        name = _toCamelCase(name);
+        uploader = this.watch.uploaders[name];
         options = (uploader || {}).options || {};
         
         if (uploader && key && val) {
