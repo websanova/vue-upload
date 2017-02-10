@@ -172,7 +172,7 @@ module.exports = function () {
             errors = [];
 
         // Check extensions.
-        if (options.extensions.indexOf(file.name.split('.')[1]) < 0) {
+        if (options.extensions.indexOf( (file.name.split('.')[1] || '').toLowerCase() ) < 0) {
             errors.push({
                 rule: 'extension',
                 message: 'File has an invalid extension.'
