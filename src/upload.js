@@ -49,6 +49,8 @@ module.exports = function () {
         var files = document.getElementById('websanova-upload-' + name).files;
         
         _processFiles.call(this, name, files);
+        
+        document.getElementById('websanova-upload-' + name).value = null;
     }
 
     function _processFiles(name, files) {
