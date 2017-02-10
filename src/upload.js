@@ -106,6 +106,11 @@ module.exports = function () {
             })(i);
         }
 
+        // Reset percentComplete if fresh batch.
+        if (uploader.meta.status === 'complete') {
+            uploader.meta.percentComplete = 0;
+        }
+
         // Fire off events.
         // TODO: This is redundant, but leaving it for now in case it moves later.
         if (uploader.options.onSelect) {
