@@ -24,8 +24,9 @@ A simple, light weight and intuitive upload control for Vue.js.
 
 Require in the project.
 
+~~~
 Vue.use(require('./plugins/upload/src/index.js'));
-
+~~~
 
 
 
@@ -40,7 +41,7 @@ this.$upload.new('profile-avatar', {
 });
 ~~~
 
-It's likely things like the `id` would not be static so can also used the reset function to update any options.
+It's likely things like the `id` would not be static so use the `reset` function to update any options.
 
 ~~~
 created() {
@@ -68,13 +69,13 @@ Check the [Examples](#examples) section below for more use case scenarios.
 
 All files will be in an array even if `multiple` is set to `false`.
 
-For single items just take the first file in the object directly.
+For single items the first file in the object can be taken directly.
 
 ~~~
 $upload.files('profile-avatar')[0];
 ~~~
 
-For a large set they can be looped through;
+For a large set they can be looped through.
 
 ~~~
 <div v-for="file in $upload.files('product-gallery').all">
@@ -117,11 +118,11 @@ Note that errors can come internally from the module itself or externally from a
 
 Use `parseErrors` option when installing the plugin to format errors from the server.
 
-The internal default format is:
+The internal default format is: `[{rule: 'somerule', message: 'There was an error.''}]`
 
 **preview**
 
-The preview is a function you can call with a callback that will locally load the file (not uploaded).
+The `preview` options is a function that can be set with a callback that will locally load the file (not uploaded).
 
 ~~~
 this.$upload.new('brand-logo', {
@@ -146,11 +147,11 @@ The top level error is designed to prevent the upload from even beginning.
 
 This is primarily for cases where for instance a max amount of files has been reached or too many files have been selected.
 
-Two important things to note:
+Some important things to note:
 
 * If there any errors in single files it will log ONE error here saying so.
 * If it's global conditions are met it will still fire off individual uploads.
-* It has three statuses: `ready`, `sending`, `error`, `complete` which can be found in the `meta` object.
+* It has statuses: `ready`, `sending`, `error`, `complete` which can be found in the `meta` object.
 * The `error` status will only get triggered if the global condition fails.
 * The `complete` status will still trigger for individual file errors. An global error will be logged (more as a warning) but the state will NOT be in `error`.
 
@@ -177,7 +178,7 @@ Different ways to deal with errors are covered in the [Examples](#examples) sect
 This is used to create a new "upload" instance.
 
 * An upload instance is tracked in a global state.
-* Existing states will not be overwritten so you can call `new` multiple times without worry (use $reset for updating options).
+* Existing states will not be overwritten so you can call `new` multiple times without worry (use `reset` for updating options).
 * It will always contain the current components instance when using `this`.
 
 Typically a combination of `new` and `reset` will be used. It's mostly semantic but it's nice to keep the separation. 
@@ -237,8 +238,8 @@ This would not affect any existing options, but only clear out the `files` array
 
 This is used to trigger the browsers file select popup/dialog.
 
-* It's important to note that by default it will trigger the upload.
-* Set `startOnSelect` option to `false` to prevent this.
+* It's important to note that by default the uploads will start once files are selected.
+* Set `startOnSelect` option to `false` to prevent uploads from beginning after selection.
 
 ~~~
 <button v-on:click="$upload.select('brand-logo')">
@@ -249,9 +250,9 @@ This is used to trigger the browsers file select popup/dialog.
 
 ### start
 
-This options is made to be used in conjunction with the `startOnSelect` option when it's set to false.
+This option is to be used in conjunction with the `startOnSelect` option when it's set to `false`.
 
-* It allows you to manually trigger the upload.
+* It allows manual triggering of the upload.
 * Good to use with previews.
 
 ~~~
@@ -283,9 +284,10 @@ this.$upload.new('brand-logo', {
 
 Contains arrays of files currently being processed.
 
-* It contains multiple queues that can be used to display data in whichever way you please.
+* It contains multiple queues that can be used to display file data for viewing.
 * The queues are `all`, `queued`, `progress`, `success`, `error`, `complete`.
 * Note in some cases there is overlap like in `success`, `error`, `complete`.
+* The array will not reset after completing (use `reset` and `onEnd` for that).
 
 ~~~
 <div v-for="file in $upload.files('product-gallery').progress">
@@ -300,7 +302,7 @@ Contains arrays of files currently being processed.
 
 ### meta
 
-Fetches some meta info about the current upload.
+Fetches some meta info about the current uploads.
 
 The meta info is fully reactive an can be used directly in the templates.
 
@@ -319,7 +321,7 @@ It will be either `ready`, `sending`, `error`, `complete`. Check the [Errors](#e
 For keeping track of the total files in the current upload set.
 
 * It's important to note that once all uploads complete it will be reset to 0.
-* This primarily used to keep track of current upload progress.
+* This primarily used to keep track of current upload progress percentage.
 * If there are still items in queue or in progress and more files are added this will increment.
 
 **percentComplete**
@@ -371,7 +373,7 @@ The "name" to use for the upload file.
 
 ### `body: {}`
 
-Any additional form data to be send with the upload.
+Any additional form data to be sent with the upload.
 
 
 ### `onSelect: null`
@@ -423,7 +425,7 @@ It must return an array of objects in the format: `[{rule: 'someerror', message:
 
 ### `http: _http`
 
-By default the plugin "assumes" `Vue.http vue-resource` is used.
+By default the plugin "assumes" `Vue.http` from `vue-resource` is used.
 
 However this can be easily overridden.
 
@@ -450,7 +452,7 @@ Can also be used in conjunction with `maxFilesInProgress`.
 
 ### `maxFilesInProgress: 2`
 
-Set the maximum number of uploads that can run in paralles when `async` is set to `true`.
+Set the maximum number of uploads that can run in parallel when `async` is set to `true`.
 
 
 ### `startOnSelect: true`
@@ -516,7 +518,7 @@ beforeDestroy() {
 
 ## Examples
 
-Here are some common scenarios you will likely encounter when doing an upload and how `$upload` can handle them.
+Some common scenarios likely to be encountered when doing an upload and how `$upload` can handle them.
 
 
 ### Single File (Profile Avatar)
@@ -621,6 +623,8 @@ mounted() {
 
 ### Multiple File (With Dropzone)
 
+Multiple file upload with async, dropzone and file list.
+
 ~~~
 <div>
     <button v-on:click="$upload.select('product-gallery')" :disabled="$upload.meta('product-gallery').status === 'sending'">
@@ -691,7 +695,6 @@ created() {
     this.$upload.new('product-gallery', {
         async: true,
         maxFiles: 20,
-        maxSizePerFile: 1024,
         multiple: true,
         onStart() {
              this.$toggle.show('product:media:uploads');
