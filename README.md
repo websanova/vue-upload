@@ -25,7 +25,7 @@ A simple, light weight and intuitive upload control for Vue.js.
 Require in the project.
 
 ~~~
-Vue.use(require('./plugins/upload/src/index.js'));
+Vue.use(require('@websanova/vue-upload'));
 ~~~
 
 
