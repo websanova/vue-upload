@@ -131,10 +131,6 @@ module.exports = function () {
 
         // If on select fire off right away.
         if (uploader.options.startOnSelect) {
-            if (uploader.meta.status !== 'sending' && uploader.options.onStart) {
-                uploader.options.onStart.call(uploader.ctx);
-            }
-
             _processQueue.call(this, name);
         }
     }
@@ -243,6 +239,10 @@ module.exports = function () {
     function _processQueue(name) {
         var uploader = this.watch.uploaders[name],
             maxFilesInProgress = uploader.options.async ? uploader.options.maxFilesInProgress : 1;
+
+        if (uploader.meta.status !== 'sending' && uploader.options.onStart) {
+            uploader.options.onStart.call(uploader.ctx);
+        }
 
         while (uploader.files.queued.length && uploader.files.progress.length < maxFilesInProgress) {
             _startFileUpload.call(this, name, uploader.files.queued[0]);
