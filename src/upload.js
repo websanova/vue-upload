@@ -87,6 +87,11 @@ module.exports = function () {
                 uploader.options.onSelect.call(uploader.ctx);
             }
 
+            // If error, still fire off the onEnd.
+            if (uploader.options.onEnd) {
+                uploader.options.onEnd.call(uploader.ctx);
+            }
+
             return;
         }
 
@@ -193,7 +198,7 @@ module.exports = function () {
             }
         }
 
-        if (file.errors.length) {
+        if (errors.length) {
             this.watch.uploaders[name].errors.push({
                 rule: 'fileError',
                 message: 'Some of the files could not be uploaded due to errors.'
@@ -318,6 +323,11 @@ module.exports = function () {
                 file.errors = uploader.options.parseErrors(res);
 
                 if (uploader.options.onError) {
+                    uploader.errors.push({
+                        rule: 'fileError',
+                        message: 'Some of the files could not be uploaded due to errors.'
+                    });
+
                     uploader.options.onError.call(uploader.ctx, res, file);
                 }
             }
