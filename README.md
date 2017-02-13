@@ -18,15 +18,15 @@ A simple, light weight and intuitive upload control for Vue.js.
 
 ## Install
 
-~~~
-> sudo npm install @websanova/vue-upload
-~~~  
+```bash
+$ sudo npm install @websanova/vue-upload
+``` 
 
 Require in the project.
 
-~~~
+```vue
 Vue.use(require('@websanova/vue-upload'));
-~~~
+```
 
 
 
@@ -35,15 +35,15 @@ Vue.use(require('@websanova/vue-upload'));
 
 At a minimum you will need to at least provide a `url` when creating a new `$upload` instance.
 
-~~~
+```javascript
 this.$upload.new('profile-avatar', {
     url: 'users/1/avatar'
 });
-~~~
+```
 
 It's likely things like the `id` would not be static so use the `reset` function to update any options.
 
-~~~
+```javascript
 created() {
     this.$upload.new('profile-avatar', {
         onSuccess(res) {
@@ -57,7 +57,7 @@ mounted() {
         url: 'users/' + this.$user.id + '/avatar'
     });
 },
-~~~
+```
 
 Check the [Examples](#examples) section below for more use case scenarios.
 
@@ -71,13 +71,13 @@ All files will be in an array even if `multiple` is set to `false`.
 
 For single items the first file in the object can be taken directly.
 
-~~~
+```javascript
 $upload.files('profile-avatar')[0];
-~~~
+```
 
 For a large set they can be looped through.
 
-~~~
+```vue
 <div v-for="file in $upload.files('product-gallery').all">
     {{ file.name }} <br/>
     {{ file.size }} <br/>
@@ -86,7 +86,7 @@ For a large set they can be looped through.
     {{ file.percentComplete }} <br/>
     {{ file.errors | json }}<br/>
 </div>
-~~~
+```
 
 All files contain the following meta data:
 
@@ -124,7 +124,7 @@ The internal default format is: `[{rule: 'somerule', message: 'There was an erro
 
 The `preview` options is a function that can be set with a callback that will locally load the file (not uploaded).
 
-~~~
+```javascript
 this.$upload.new('brand-logo', {
     onSelect(files) {
         files[0].preview(function (file) {
@@ -132,7 +132,7 @@ this.$upload.new('brand-logo', {
         });
     }
 });
-~~~
+```
 
 
 
@@ -183,7 +183,7 @@ This is used to create a new "upload" instance.
 
 Typically a combination of `new` and `reset` will be used. It's mostly semantic but it's nice to keep the separation. 
 
-~~~
+```javascript
 created() {
     this.$upload.new('profile-avatar', {
         onSuccess(res) {
@@ -201,7 +201,7 @@ mounted() {
         url: 'users/' + this.$auth.user().id + '/avatar'
     });
 },
-~~~
+```
 
 
 ### `reset`
@@ -213,23 +213,23 @@ Also check the `new` option for more details.
 * An instance using `new` must be created first.
 * Additional options can be passed in to override any existing ones (useful for updating the url).
 
-~~~
+```javascript
 mounted() {
     this.$upload.reset('profile-avatar', {
         url: 'users/' + this.$auth.user().id + '/avatar'
     });
 },
-~~~
+```
 
 It's also useful to call `reset()` for clearing an upload when using `multiple`.
 
 For instance a "clear" button.
 
-~~~
+```vue
 <button v-on:click="$upload.reset('product-gallery')">
     Clear
 </button>
-~~~
+```
 
 This would not affect any existing options, but only clear out the `files` arrays and reset some `meta` values.
 
@@ -241,11 +241,11 @@ This is used to trigger the browsers file select popup/dialog.
 * It's important to note that by default the uploads will start once files are selected.
 * Set `startOnSelect` option to `false` to prevent uploads from beginning after selection.
 
-~~~
+```vue
 <button v-on:click="$upload.select('brand-logo')">
     Update Photo
 </button>
-~~~
+```
 
 
 ### start
@@ -255,7 +255,7 @@ This option is to be used in conjunction with the `startOnSelect` option when it
 * It allows manual triggering of the upload.
 * Good to use with previews.
 
-~~~
+```vue
 <img :src="brandLogo" />
 
 <button v-on:click="$upload.select('brand-logo')">
@@ -265,9 +265,9 @@ This option is to be used in conjunction with the `startOnSelect` option when it
 <button v-on:click="$upload.start('brand-logo')">
     Upload Photo
 </button>
-~~~
+```
 
-~~~
+```javascript
 this.$upload.new('brand-logo', {
     onSelect(files) {
         var _this = this;
@@ -277,7 +277,7 @@ this.$upload.new('brand-logo', {
         });
     }
 });
-~~~
+```
 
 
 ### files
@@ -289,7 +289,7 @@ Contains arrays of files currently being processed.
 * Note in some cases there is overlap like in `success`, `error`, `complete`.
 * The array will not reset after completing (use `reset` and `onEnd` for that).
 
-~~~
+```vue
 <div v-for="file in $upload.files('product-gallery').progress">
     {{ file.name }}: {{ file.percentComplete }}%
 </div>
@@ -297,7 +297,7 @@ Contains arrays of files currently being processed.
 <div v-for="file in $upload.files('product-gallery').queued">
     {{ file.name }}: Queued for upload
 </div>
-~~~
+```
 
 
 ### meta
@@ -306,9 +306,9 @@ Fetches some meta info about the current uploads.
 
 The meta info is fully reactive an can be used directly in the templates.
 
-~~~
+```javascript
 {{ $upload.meta('product-gallery').percentComplete }}%
-~~~
+```
 
 It contains the following properties:
 
@@ -335,11 +335,11 @@ For use with drag/drop files to upload into a "drop zone".
 * Primarily used to be able to trigger an overlay when using a drop container.
 * This does NOT use the "dropzone" library.
 
-~~~
+```vue
 <el-overlay v-show="$upload.meta('product-gallery').dropzoneActive">
     Drop files anywhere here to begin upload.
 </el-overlay>
-~~~
+```
 
 
 ### errors
@@ -348,13 +348,13 @@ This returns the global error state for the upload instance.
 
 * This will not return the individual file errors.
 
-~~~
+```vue
 <div v-if="$upload.errors('product-gallery').length">
     <div v-for="error in $upload.errors('product-gallery')">
         {{ error.rule }}: {{ error.message }}
     </div>
 </div>
-~~~
+```
 
 
 ### remove
@@ -363,9 +363,9 @@ Used for removing a single file from the `files` arrays.
 
 * This will remove the file from all files arrays where it exists.
 
-~~~
+```javascript
 $upload.remove('product-gallery', file);
-~~~
+```
 
 
 
@@ -442,11 +442,11 @@ However this can be easily overridden.
 
 It contains five parameters: `url`, `body`, `progress`, `success`, `error`.
 
-~~~
+```javascript
 function _http(data) {
     this.Vue.http.post(data.url, data.body, {progress: data.progress}).then(data.success, data.error);
 }
-~~~
+```
 
 
 ### `multiple: false`
@@ -501,7 +501,7 @@ Set the dropzone container which will automatically create the dropzone.
 
 Important to note that (to be safe) the dropzone should always be unloaded when leaving the component it is called in.
 
-~~~
+```javascript
 created() {
     this.$upload.new('product-gallery', {
         async: true,
@@ -521,7 +521,7 @@ beforeDestroy() {
         dropzoneId: null
     });
 },
-~~~
+```
 
 
 
@@ -536,7 +536,7 @@ Some common scenarios likely to be encountered when doing an upload and how `$up
 
 A simple profile avatar upload with button, status and errors.
 
-~~~
+```vue
 <img :src="$auth.user().avatar || '//www.gravatar.com/avatar/?d=mysteryman&s=200'" />
 
 <div>
@@ -549,9 +549,9 @@ A simple profile avatar upload with button, status and errors.
 <div v-if="$upload.files('profile-avatar').error.length">
     {{ $upload.files('profile-avatar').error[0].errors[0].message }}
 </div>
-~~~
+```
 
-~~~
+```javascript
 created() {
     this.$upload.new('profile-avatar', {
         onSuccess(res) {
@@ -569,14 +569,14 @@ mounted() {
         url: 'users/' + this.$auth.user().id + '/avatar'
     });
 },
-~~~
+```
 
 
 ### Preview Before Upload (Logo)
 
 Selecting an image with preview before uploading.
 
-~~~
+```vue
 <img :src="brandImage || '//www.gravatar.com/avatar/?d=mysteryman&s=200'" />
 
 <div>
@@ -593,9 +593,9 @@ Selecting an image with preview before uploading.
 <div v-if="$upload.files('brand-logo').error.length" class="text-danger">
     {{ $upload.files('brand-logo').error[0].errors[0].message }}
 </div>
-~~~
+```
 
-~~~
+```javascript
 data() {
     return {
         brandImage: null
@@ -629,14 +629,14 @@ mounted() {
     
     this.brandImage = this.brand.logo || '//www.gravatar.com/avatar/?d=identicon&s=100';
 }
-~~~
+```
 
 
 ### Multiple File (With Dropzone)
 
 Multiple file upload with async, dropzone and file list.
 
-~~~
+```vue
 <div>
     <button v-on:click="$upload.select('product-gallery')" :disabled="$upload.meta('product-gallery').status === 'sending'">
         <span v-show="$upload.meta('product-gallery').status === 'sending'">Uploading...</span>
@@ -657,9 +657,9 @@ Multiple file upload with async, dropzone and file list.
 <div v-if="$upload.errors('product-gallery').length" class="text-danger">
     {{ $upload.errors('product-gallery')[0].message }}
 </div>
-~~~
+```
 
-~~~
+```vue
 <div>
     <div v-if="!$upload.files('product-gallery').all.length">
         No uploads here yet.
@@ -699,9 +699,9 @@ Multiple file upload with async, dropzone and file list.
         </div>
     </div>
 </div>
-~~~
+```
 
-~~~
+```javascript
 created() {
     this.$upload.new('product-gallery', {
         async: true,
@@ -732,4 +732,4 @@ beforeDestroy() {
         dropzoneId: null
     });
 },
-~~~
+```
