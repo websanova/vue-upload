@@ -173,7 +173,7 @@ module.exports = function () {
             errors = [];
 
         // Check extensions.
-        if (options.extensions.indexOf( (file.name.split('.')[1] || '').toLowerCase() ) < 0) {
+        if (options.extensions.indexOf( file.name.split('.').pop().toLowerCase() ) < 0) {
             errors.push({
                 rule: 'extension',
                 message: 'File must be of type: ' + options.extensions.join(', ') + '.'
