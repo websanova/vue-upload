@@ -127,7 +127,7 @@ The `preview` options is a function that can be set with a callback that will lo
 ```javascript
 this.$upload.new('brand-logo', {
     onSelect(files) {
-        files[0].preview(function (file) {
+        files[0].preview((file) => {
             // Do something with `file.raw`.
         });
     }
@@ -270,10 +270,8 @@ This option is to be used in conjunction with the `startOnSelect` option when it
 ```javascript
 this.$upload.new('brand-logo', {
     onSelect(files) {
-        var _this = this;
-
-        files[0].preview(function (file) {
-            _this.brandLogo = file.raw;
+        files[0].preview((file) => {
+            this.brandLogo = file.raw;
         });
     }
 });
@@ -511,7 +509,7 @@ created() {
 
 mounted() {
     this.$upload.reset('product-gallery', {
-        url: 'products/' + this.product.id + '/gallery',
+        url: `products/${this.product.id}/gallery`,
         dropzoneId: 'product-gallery-dropzone',
     });
 },
@@ -566,7 +564,7 @@ created() {
 
 mounted() {
     this.$upload.reset('profile-avatar', {
-        url: 'users/' + this.$auth.user().id + '/avatar'
+        url: `users/${this.$auth.user().id}/avatar`
     });
 },
 ```
@@ -603,8 +601,6 @@ data() {
 },
 
 created() {
-    var _this = this;
-
     this.$upload.new('brand-logo', {
         startOnSelect: false,
         onSuccess(res) {
@@ -615,8 +611,8 @@ created() {
             this.$msgbag.error('Error uploading brand logo.');
         },
         onSelect(files) {
-            files[0].preview(function (file) {
-                _this.brandImage = file.raw;
+            files[0].preview((file) => {
+                this.brandImage = file.raw;
             });
         }
     });
