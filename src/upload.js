@@ -587,8 +587,9 @@ module.exports = function () {
         }
     };
 
-    Upload.prototype.options = function (name, key, val) {
+    Upload.prototype.option = function (name, key, val) {
         var options,
+            uploader;
 
         name = _toCamelCase(name);
         uploader = this.watch.uploaders[name];
