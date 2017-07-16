@@ -473,6 +473,8 @@ To disable the upload from beginning automatically set this to `false`.
 
 The set of valid extensions allowed for upload.
 
+Set to `false` to ingore this check.
+
 
 ### `maxFiles: 4`
 
