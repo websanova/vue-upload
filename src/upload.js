@@ -263,6 +263,7 @@ module.exports = function () {
 
     function _startFileUpload(name, file) {
         var i,
+            key,
             _this = this,
             uploader = this.watch.uploaders[name],
             fileUploadFormData;
@@ -270,8 +271,9 @@ module.exports = function () {
         fileUploadFormData = new FormData();
                 
         fileUploadFormData.append(uploader.options.name, file.$file);
-        for (var key in uploader.options.body){
-            fileUploadFormData.append(key,uploader.options.body[key]);
+        
+        for (key in uploader.options.body) {
+            fileUploadFormData.append(key, uploader.options.body[key]);
         }
 
         file.status = 'sending';
