@@ -366,6 +366,17 @@ $upload.remove('product-gallery', file);
 ```
 
 
+### `option`
+
+Update an option without resetting the uploads.
+
+* Useful if a url or body param needs to be changed.
+
+```javascript
+$upload.option('product-gallery', 'key', 'val');
+```
+
+
 ### `dropzone`
 
 Reset the dropzone without resetting the uploads.
