@@ -106,7 +106,7 @@ module.exports = function () {
                 else {
                     uploader.files.all = [_files[i]];
                     uploader.files.success = [];
-                    uploader.files.uploaded = [];
+                    uploader.files.upload = [];
                     uploader.files.error = [];
                     uploader.files.complete = [];
                 }
@@ -292,10 +292,14 @@ module.exports = function () {
 
                 if (file.percentComplete >= 100) {
                     if (uploader.options.multiple) {
-                        uploader.files.uploaded.push(file);
+                        uploader.files.upload.push(file);
                     }
                     else {
-                        uploader.files.uploaded = [file];
+                        uploader.files.upload = [file];
+                    }
+
+                    if (uploader.options.onUpload) {
+                        uploader.options.onUpload.call(uploader.ctx, file);
                     }
                 }
 
@@ -338,7 +342,7 @@ module.exports = function () {
                 if (uploader.options.onError) {
                     uploader.errors.push({
                         rule: 'fileError',
-                        message: 'Some of the files could not be uploaded due to errors.'
+                        message: 'Some of the files could not be upload due to errors.'
                     });
 
                     uploader.options.onError.call(uploader.ctx, res, file);
@@ -465,6 +469,7 @@ module.exports = function () {
         onStart: null,
         onQueue: null,
         onProgress: null,
+        onUpload: null,
         onError: null,
         onSuccess: null,
         onComplete: null,
@@ -539,7 +544,7 @@ module.exports = function () {
         uploader.ctx = this; // Make sure to update the context here.
 
         _this.Vue.set(uploader, 'options', Object.assign({}, uploader.options, options));
-        _this.Vue.set(uploader, 'files', {all: [], queued: [], progress: [], uploaded: [], error: [], success: [], complete: []});
+        _this.Vue.set(uploader, 'files', {all: [], queued: [], progress: [], upload: [], error: [], success: [], complete: []});
         _this.Vue.set(uploader, 'meta', {status: 'ready', totalFiles: 0, percentComplete: 0, dropzoneActive: false});
         _this.Vue.set(uploader, 'errors', []);
 
@@ -563,7 +568,7 @@ module.exports = function () {
     Upload.prototype.files = function (name) {
         name = _toCamelCase(name);
         
-        return (this.watch.uploaders[name] || {}).files || {all: [], queued: [], progress: [], uploaded: [], error: [], success: [], complete: []};
+        return (this.watch.uploaders[name] || {}).files || {all: [], queued: [], progress: [], upload: [], error: [], success: [], complete: []};
     };
 
     Upload.prototype.meta = function (name) {
