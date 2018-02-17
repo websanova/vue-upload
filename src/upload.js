@@ -69,6 +69,8 @@ module.exports = function () {
         for (i = 0, ii = files.length; i < ii; i++) {
             _files.push({
                 $file: files[i],
+                url: uploader.options.url,
+                body: Object.assign({}, uploader.options.body),
                 name: files[i].name,
                 size: files[i].size,
                 type: files[i].type,
@@ -272,8 +274,8 @@ module.exports = function () {
                 
         fileUploadFormData.append(uploader.options.name, file.$file);
         
-        for (key in uploader.options.body) {
-            fileUploadFormData.append(key, uploader.options.body[key]);
+        for (key in file.body) {
+            fileUploadFormData.append(key, file.body[key]);
         }
 
         file.status = 'sending';
