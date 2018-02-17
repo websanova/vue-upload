@@ -106,7 +106,7 @@ module.exports = function () {
                 else {
                     uploader.files.all = [_files[i]];
                     uploader.files.success = [];
-                    uploader.files.upload = [];
+                    uploader.files.uploaded = [];
                     uploader.files.error = [];
                     uploader.files.complete = [];
                 }
@@ -292,10 +292,10 @@ module.exports = function () {
 
                 if (file.percentComplete >= 100) {
                     if (uploader.options.multiple) {
-                        uploader.files.upload.push(file);
+                        uploader.files.uploaded.push(file);
                     }
                     else {
-                        uploader.files.upload = [file];
+                        uploader.files.uploaded = [file];
                     }
 
                     if (uploader.options.onUpload) {
@@ -544,7 +544,7 @@ module.exports = function () {
         uploader.ctx = this; // Make sure to update the context here.
 
         _this.Vue.set(uploader, 'options', Object.assign({}, uploader.options, options));
-        _this.Vue.set(uploader, 'files', {all: [], queued: [], progress: [], upload: [], error: [], success: [], complete: []});
+        _this.Vue.set(uploader, 'files', {all: [], queued: [], progress: [], uploaded: [], error: [], success: [], complete: []});
         _this.Vue.set(uploader, 'meta', {status: 'ready', totalFiles: 0, percentComplete: 0, dropzoneActive: false});
         _this.Vue.set(uploader, 'errors', []);
 
@@ -568,7 +568,7 @@ module.exports = function () {
     Upload.prototype.files = function (name) {
         name = _toCamelCase(name);
         
-        return (this.watch.uploaders[name] || {}).files || {all: [], queued: [], progress: [], upload: [], error: [], success: [], complete: []};
+        return (this.watch.uploaders[name] || {}).files || {all: [], queued: [], progress: [], uploaded: [], error: [], success: [], complete: []};
     };
 
     Upload.prototype.meta = function (name) {
