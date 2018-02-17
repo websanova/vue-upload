@@ -605,5 +605,13 @@ module.exports = function () {
         return options;
     };
 
+    Upload.prototype.dropzone = function (name, id) {
+        if (id) {
+            this.option(name, 'dropzoneId', id)
+        }
+
+        _initDropzone.call(this, name);
+    };
+
     return Upload;
 };

@@ -366,6 +366,16 @@ $upload.remove('product-gallery', file);
 ```
 
 
+### `dropzone`
+
+Reset the dropzone without resetting the uploads.
+
+* Useful if there is a global upload but only triggers via a dropzone on a specific page.
+
+```javascript
+$upload.dropzone('product-gallery', 'id');
+```
+
 
 
 ## Options
