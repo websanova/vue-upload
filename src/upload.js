@@ -106,6 +106,7 @@ module.exports = function () {
                 else {
                     uploader.files.all = [_files[i]];
                     uploader.files.success = [];
+                    uploader.files.uploaded = [];
                     uploader.files.error = [];
                     uploader.files.complete = [];
                 }
@@ -282,11 +283,20 @@ module.exports = function () {
         uploader.meta.status = 'sending';
 
         uploader.options.http.call(this, {
-            url: uploader.options.url,
+            url: file.url,
             body: fileUploadFormData,
             progress: function (e) {
                 if (e.lengthComputable) {
                     file.percentComplete = Math.ceil(e.loaded / e.total * 100);
+                }
+
+                if (file.percentComplete >= 100) {
+                    if (uploader.options.multiple) {
+                        uploader.files.uploaded.push(file);
+                    }
+                    else {
+                        uploader.files.uploaded = [file];
+                    }
                 }
 
                 _calculatePercentComplete.call(_this, name);
@@ -529,7 +539,7 @@ module.exports = function () {
         uploader.ctx = this; // Make sure to update the context here.
 
         _this.Vue.set(uploader, 'options', Object.assign({}, uploader.options, options));
-        _this.Vue.set(uploader, 'files', {all: [], queued: [], progress: [], error: [], success: [], complete: []});
+        _this.Vue.set(uploader, 'files', {all: [], queued: [], progress: [], uploaded: [], error: [], success: [], complete: []});
         _this.Vue.set(uploader, 'meta', {status: 'ready', totalFiles: 0, percentComplete: 0, dropzoneActive: false});
         _this.Vue.set(uploader, 'errors', []);
 
@@ -553,7 +563,7 @@ module.exports = function () {
     Upload.prototype.files = function (name) {
         name = _toCamelCase(name);
         
-        return (this.watch.uploaders[name] || {}).files || {all: [], queued: [], progress: [], error: [], success: [], complete: []};
+        return (this.watch.uploaders[name] || {}).files || {all: [], queued: [], progress: [], uploaded: [], error: [], success: [], complete: []};
     };
 
     Upload.prototype.meta = function (name) {
