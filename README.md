@@ -467,6 +467,24 @@ function _http(data) {
 }
 ```
 
+Example using Axios:
+
+```javascript
+function _http(data) {
+    axios.get(data.url)
+      .then(data.success)
+      .catch(data.error);
+}
+function _parseErrors(error) {
+    // in this example, the backend is returning JSON with a 'detail' field
+    if (error.response.data.detail) {
+        return [{rule: 'fileError', message: error.response.data.detail}];
+    }
+
+    return [];
+}
+```
+
 
 ### `multiple: false`
 
@@ -518,7 +536,7 @@ Set the maximum size per file.
 
 ### `dropzoneId: null`
 
-Set the dropzone container which will automatically create the dropzone.
+You can set this to a DOM element ID to automatically assign the necessary drag and drop events to the element.
 
 Important to note that (to be safe) the dropzone should always be unloaded when leaving the component it is called in.
 
@@ -657,7 +675,7 @@ Multiple file upload with async, dropzone and file list.
 
 ```vue
 <div>
-    <button v-on:click="$upload.select('product-gallery')" :disabled="$upload.meta('product-gallery').status === 'sending'">
+    <button id="product-gallery-dropzone" v-on:click="$upload.select('product-gallery')" :disabled="$upload.meta('product-gallery').status === 'sending'">
         <span v-show="$upload.meta('product-gallery').status === 'sending'">Uploading...</span>
         <span v-show="!$upload.meta('product-gallery').status === 'sending'">Select Photos</span>
     </button>
@@ -676,9 +694,7 @@ Multiple file upload with async, dropzone and file list.
 <div v-if="$upload.errors('product-gallery').length" class="text-danger">
     {{ $upload.errors('product-gallery')[0].message }}
 </div>
-```
 
-```vue
 <div>
     <div v-if="!$upload.files('product-gallery').all.length">
         No uploads here yet.
