@@ -334,9 +334,9 @@ For use with drag/drop files to upload into a "drop zone".
 * This does NOT use the "dropzone" library.
 
 ```vue
-<el-overlay v-show="$upload.meta('product-gallery').dropzoneActive">
+<div v-show="$upload.meta('product-gallery').dropzoneActive">
     Drop files anywhere here to begin upload.
-</el-overlay>
+</div>
 ```
 
 
