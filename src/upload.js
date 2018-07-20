@@ -292,6 +292,10 @@ module.exports = function () {
     function _clearError(error) {
         var i, ii;
 
+        if (!error) {
+            return;
+        }
+
         for (i = 0, ii = this.$vm.errors.length; i < ii; i++) {
             if (this.$vm.errors[i].$id === error.$id) {
                 this.$vm.errors.splice(i, 1);
@@ -305,6 +309,10 @@ module.exports = function () {
     function _clearFile(file) {
         var i, ii,
             index;
+
+        if (!file) {
+            return;
+        }
 
         if (file.$request) {
             file.$request.abort();
