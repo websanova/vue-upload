@@ -601,7 +601,7 @@ module.exports = function () {
         this.Vue = Vue;
 
         this.$vm = new Vue({
-            data() {
+            data: function() {
                 return {
                     instances: {}
                 };
