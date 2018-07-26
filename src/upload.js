@@ -1,6 +1,6 @@
 module.exports = function () {
 
-    var __upload;
+    var __upload = null;
 
     var __defaultOptions = {
         url: null,
@@ -61,7 +61,7 @@ module.exports = function () {
             return;
         }
 
-        Vue.set(__upload.$vm.instances, name, {
+        __upload.Vue.set(__upload.$vm.instances, name, {
             files: {
                 all: [],
                 queue: [],
@@ -596,8 +596,6 @@ module.exports = function () {
         totalFilesActive = 0;
         
         for (i = 0, ii = this.$vm.files.all.length; i < ii; i++) {
-            console.log(this.$vm.files.all[i].active);
-
             if (this.$vm.files.all[i].active) {
                 totalFilesActive++;
             }
@@ -717,4 +715,4 @@ module.exports = function () {
     };
 
     return Upload;
-};
+}

@@ -1,23 +1,19 @@
 var Upload = require('./upload.js')();
 
-module.exports = (function () {
-    return function install(Vue, options) {
-        var upload, _on, _off;
+export default function install(Vue, options) {
+    var upload = new Upload(Vue, options);
 
-        upload = new Upload(Vue, options),
+    var _on = upload.on;
+    var _bind = upload.bind;
 
-        _on = upload.on;
-        _bind = upload.bind;
+    Object.defineProperties(Vue.prototype, {
+        $upload: {
+            get: function () {
+                upload.on = _on.bind(this);
+                upload.bind = _bind.bind(this);
 
-        Object.defineProperties(Vue.prototype, {
-            $upload: {
-                get: function () {
-                    upload.on = _on.bind(this);
-                    upload.bind = _bind.bind(this);
-
-                    return upload;
-                }
+                return upload;
             }
-        });
-    }
-})();
+        }
+    });
+};
