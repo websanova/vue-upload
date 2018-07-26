@@ -397,6 +397,7 @@ module.exports = function () {
             type: type,
             extension: extension,
             state: 'queue',
+            active: true, // to keep track of which files are in active download set which gets reset onEnd / complete.
             sending: false,
             errors: [],
             error: {},
@@ -473,7 +474,8 @@ module.exports = function () {
     }
 
     function _process() {
-        var file,
+        var i, ii,
+            file,
             valid;
 
         if (this.$vm.files.progress.length >= this.options.maxFilesInProgress) {
@@ -483,6 +485,11 @@ module.exports = function () {
         if (!this.$vm.files.queue.length) {
             if (!this.$vm.files.progress.length && this.$vm.meta.state === 'uploading') {
                 this.$vm.meta.state = 'complete';
+
+                // Reset all active to false.
+                for (i = 0, ii = this.$vm.files.all.length; i < ii; i++) {
+                    this.$vm.files.all[i].active = false;
+                }
                 
                 this.onEnd();
             }
@@ -582,17 +589,26 @@ module.exports = function () {
 
     function _percent() {
         var i, ii,
-            totalFiles,
-            percentComplete;
+            percentComplete,
+            totalFilesActive;
 
-        totalFiles = this.$vm.files.all.length;
-        percentComplete = (totalFiles - this.$vm.files.queue.length - this.$vm.files.progress.length) * 100;
+        totalFilesActive = 0;
+        
+        for (i = 0, ii = this.$vm.files.all.length; i < ii; i++) {
+            console.log(this.$vm.files.all[i].active);
+
+            if (this.$vm.files.all[i].active) {
+                totalFilesActive++;
+            }
+        }
+
+        percentComplete = (totalFilesActive - this.$vm.files.queue.length - this.$vm.files.progress.length) * 100;
         
         for (i = 0, ii = this.$vm.files.progress.length; i < ii; i++) {
             percentComplete += this.$vm.files.progress[i].percentComplete;
         }
 
-        this.$vm.meta.percentComplete = Math.ceil(percentComplete / (totalFiles * 100) * 100);
+        this.$vm.meta.percentComplete = Math.ceil(percentComplete / (totalFilesActive * 100) * 100);
     }
 
     function Upload(Vue, options) {
