@@ -271,7 +271,7 @@ It contains the following properties:
 
 **state**
 
-It will be either `ready`, `sending`, `error`, `success`. Check the [Errors](#errors) section above for more info.
+It will be either `ready`, `uploading`, `complete`.
 
 **percentComplete**
 
@@ -663,3 +663,21 @@ beforeDestroy() {
     this.$upload.off('product-gallery');
 },
 ```
+
+## Change Log
+
+### v0.3.x-beta
+
+* The `new` method has been changed to `on`.
+* The `reset` method just resets all variables and queues/sets now.
+* A new `bind` method is now available rebind any context.
+* A new `off` method is available to unbind and delete all references (dropzone, inputs, etct).
+* All `status` properties have been changed to `state` at file and global level.
+* Added `state` and `percent` methods (just shortcuts for meta.percentComplete and meta.state).
+* Global state values are now `ready`, `uploading`, `complete`. This is the value provided by `meta.state`. 
+* File `state` values are now `queue`, `progress`, `upload`, `error`, `success` witch align directly with the `files()` sets.
+* The `files()` method now contains `all`, `queue`, `progress`, `upload`, `error`, `success` sets. The `complete` set has been dropped.
+* Max file size check has been changed from Kilobytes to bytes.
+* Event order is now `onSelect`, `onStart`, `onQueue`, `onProgress`, `onUpload`, `onError`, `onSuccess`, `onComplete`, `onEnd`.
+* Pressing cancel in the file select dialog now does not fire any events.
+* The `parseErrors` format is now a single object not an array of objects. Reason being that an error is likely to be either file size or extension or system error. So really no reason to stack errors here. Otherwise format remains the same `{code: 'someCode', msg: 'someMsg'}`.
