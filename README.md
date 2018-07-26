@@ -666,8 +666,9 @@ beforeDestroy() {
 
 ## Change Log
 
-### v0.3.x-beta
+### v1.0.x-beta
 
+* Update version to `1.0.x`.
 * The `new` method has been changed to `on`.
 * The `reset` method just resets all variables and queues/sets now.
 * A new `bind` method is now available rebind any context.
