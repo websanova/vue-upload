@@ -669,6 +669,18 @@ module.exports = function () {
         return __upload.instances[name].$vm.meta;
     }
 
+    Upload.prototype.percent = function (name) {
+        _create(name);
+
+        return __upload.instances[name].$vm.meta.percentComplete;
+    }
+
+    Upload.prototype.state = function (name) {
+        _create(name);
+
+        return __upload.instances[name].$vm.meta.state;
+    }
+
     Upload.prototype.dropzone = function (name) {
         _create(name);
 

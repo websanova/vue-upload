@@ -278,6 +278,27 @@ It will be either `ready`, `sending`, `error`, `success`. Check the [Errors](#er
 Keeps track of progress for the currently uploading files.
 
 
+
+### percent
+
+Shortcut for meta.percentComplete.
+
+~~~javascript
+$upload.percent('demo');
+~~~
+
+
+
+### state
+
+Shortcut for meta.state.
+
+~~~javascript
+$upload.state('demo');
+~~~
+
+
+
 ### dropzone
 
 For use with drag/drop files to upload into a "drop zone".
