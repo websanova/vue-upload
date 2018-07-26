@@ -322,7 +322,7 @@ This returns the global error state for the upload instance.
 ```vue
 <div v-if="$upload.errors('product-gallery').length">
     <div v-for="error in $upload.errors('product-gallery')">
-        {{ error.code }}: {{ error.message }}
+        {{ error.code }}: {{ error.msg }}
     </div>
 </div>
 ```
@@ -545,7 +545,7 @@ A simple profile avatar upload with button, state and errors.
 </div>
 
 <div v-if="$upload.files('profile-avatar').error.length">
-    {{ $upload.files('profile-avatar').error[0].errors[0].message }}
+    {{ $upload.files('profile-avatar').error[0].errors[0].msg }}
 </div>
 ```
 
@@ -593,7 +593,7 @@ Multiple file upload with async, dropzone and file list.
 </div>
 
 <div v-if="$upload.errors('product-gallery').length" class="text-danger">
-    {{ $upload.errors('product-gallery')[0].message }}
+    {{ $upload.errors('product-gallery')[0].msg }}
 </div>
 
 <div>
@@ -681,4 +681,6 @@ beforeDestroy() {
 * Max file size check has been changed from Kilobytes to bytes.
 * Event order is now `onSelect`, `onStart`, `onQueue`, `onProgress`, `onUpload`, `onError`, `onSuccess`, `onComplete`, `onEnd`.
 * Pressing cancel in the file select dialog now does not fire any events.
-* The `parseErrors` format is now a single object not an array of objects. Reason being that an error is likely to be either file size or extension or system error. So really no reason to stack errors here. Otherwise format remains the same `{code: 'someCode', msg: 'someMsg'}`.
+* The `parseErrors` format is now a single object not an array of objects. Reason being that an error is likely to be either file size or extension or system error. So really no reason to stack errors here.
+* The error format has changed to `{code: 'someCode', msg: 'someMsg'}`. The `message` param has been changed to `msg`.
+* The callbacks have been update to always return the `file` first instead of a `response` then file. So `onSuccess(file, res)` instead of `onSuccess(res, file)`. This is just for more consistency since most of the function do not have a response.
