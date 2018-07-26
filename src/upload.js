@@ -23,7 +23,7 @@ module.exports = function () {
         maxFilesInProgress: 2,
         maxSizePerFile: 1024 * 1024 * 2, // MB
         maxFilesSelectMsg: 'Max of {max} files can be selected at a time.',
-        maxFileSizeMsg: 'Max of {max} kb per file.',
+        maxFileSizeMsg: 'Max of {max} mb per file.',
         invalidExtensionMsg: 'File must be one of {extensions}.',
         // currentFiles: null,
         parseErrors: __parseErrors,
@@ -461,7 +461,7 @@ module.exports = function () {
             error = {
                 file: file,
                 code: 'file-max-size',
-                msg: this.options.maxFileSizeMsg.replace('{max}', this.options.maxSizePerFile)
+                msg: this.options.maxFileSizeMsg.replace('{max}', Math.floor(this.options.maxSizePerFile / 1024 / 1024))
             };
         }
 
