@@ -19,7 +19,7 @@ $ sudo npm install @websanova/vue-upload
 
 Require in the project.
 
-```vue
+```javascript
 import vueUpload from '@websanova/vue-upload';
 
 Vue.use(vueUpload);
@@ -27,7 +27,7 @@ Vue.use(vueUpload);
 
 OR
 
-```
+```javascript
 Vue.use(require('@websanova/vue-upload').default);
 ```
 
