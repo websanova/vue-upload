@@ -383,6 +383,7 @@ module.exports = function () {
 
         extension = name.length > 1 ? name[name.length - 1] : null;
         extension = extension ? extension : (type[1] || null);
+        extension = (extension || '').toLowerCase();
 
         type = type[0] || null;
 
