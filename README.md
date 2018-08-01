@@ -92,39 +92,39 @@ $upload.file('profile-avatar');
 
 All files contain the following meta data:
 
-**$id**
+`$id`
 
 For reference and to `key` in loops.
 
-**$file**
+`$file`
 
 Reference to raw file object from browser.
 
-**name**
+`name`
 
 The name of the file.
 
-**size**
+`size`
 
 The size of the file.
 
-**type**
+`type`
 
 The mime type of the file.
 
-**extension**
+`extension`
 
 Extension of the file from filename then mimetype based on what is available.
 
-**state**
+`state`
 
 Current state of the file which will be either `queue`, `progress`, `upload`, `error` or `success`.
 
-**percentComplete**
+`percentComplete`
 
 Percent progress indicator for the file as an integer (0 to 100);
 
-**errors**
+`errors`
 
 Errors from file.
 
@@ -213,7 +213,7 @@ For instance a "clear" button.
 ```
 
 
-### select
+### `select`
 
 This is used to trigger the browsers file select popup/dialog.
 
@@ -227,7 +227,7 @@ This is used to trigger the browsers file select popup/dialog.
 ```
 
 
-### start
+### `start`
 
 This option is to be used in conjunction with the `startOnSelect` option when it's set to `false`.
 
@@ -246,7 +246,7 @@ This option is to be used in conjunction with the `startOnSelect` option when it
 ```
 
 
-### files
+### `files`
 
 Contains arrays of files currently being processed.
 
@@ -265,7 +265,7 @@ Contains arrays of files currently being processed.
 ```
 
 
-### meta
+### `meta`
 
 Fetches some meta info about the current uploads.
 
@@ -277,17 +277,17 @@ The meta info is fully reactive an can be used directly in the templates.
 
 It contains the following properties:
 
-**state**
+`state`
 
 It will be either `ready`, `uploading`, `complete`.
 
-**percentComplete**
+`percentComplete`
 
 Keeps track of progress for the currently uploading files.
 
 
 
-### percent
+### `percent`
 
 Shortcut for meta.percentComplete.
 
@@ -297,7 +297,7 @@ $upload.percent('demo');
 
 
 
-### state
+### `state`
 
 Shortcut for meta.state.
 
@@ -306,8 +306,7 @@ $upload.state('demo');
 ~~~
 
 
-
-### dropzone
+### `dropzone`
 
 For use with drag/drop files to upload into a "drop zone".
 
@@ -321,7 +320,7 @@ For use with drag/drop files to upload into a "drop zone".
 ```
 
 
-### errors
+### `errors`
 
 This returns the global error state for the upload instance.
 
@@ -336,7 +335,7 @@ This returns the global error state for the upload instance.
 ```
 
 
-### remove
+### `remove`
 
 Used for removing a single file from the `files` arrays.
 
@@ -355,17 +354,6 @@ Update an option without resetting the uploads.
 
 ```javascript
 $upload.option('product-gallery', 'key', 'val');
-```
-
-
-### `dropzone`
-
-Reset the dropzone without resetting the uploads.
-
-* Useful if there is a global upload but only triggers via a dropzone on a specific page.
-
-```javascript
-$upload.dropzone('product-gallery', 'id');
 ```
 
 
