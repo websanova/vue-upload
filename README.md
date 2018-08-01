@@ -668,7 +668,7 @@ beforeDestroy() {
 * The `new` method has been changed to `on`.
 * The `reset` method just resets all variables and queues/sets now.
 * A new `bind` method is now available rebind any context.
-* A new `off` method is available to unbind and delete all references (dropzone, inputs, etct).
+* A new `off` method is available to unbind and delete all references (dropzone, inputs, etc).
 * All `status` properties have been changed to `state` at file and global level.
 * Added `state` and `percent` methods (just shortcuts for meta.percentComplete and meta.state).
 * Global state values are now `ready`, `uploading`, `complete`. This is the value provided by `meta.state`. 
