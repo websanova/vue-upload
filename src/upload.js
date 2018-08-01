@@ -457,7 +457,7 @@ module.exports = function () {
             };
         }
 
-        else if (file.size > this.options.maxSizePerFile) {
+        else if (this.options.maxSizePerFile > 0 && file.size > this.options.maxSizePerFile) {
             error = {
                 file: file,
                 code: 'file-max-size',
