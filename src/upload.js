@@ -449,7 +449,7 @@ module.exports = function () {
     function _valid(file) {
         var error;
 
-        if (this.options.extensions.indexOf(file.extension) < 0) {
+        if (this.options.extensions && this.options.extensions.indexOf(file.extension) < 0) {
             error = {
                 file: file,
                 code: 'file-extension',
