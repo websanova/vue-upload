@@ -35,6 +35,10 @@ module.exports = function () {
         e.stopPropagation();
     }
 
+    function __containsFiles(event) {
+        return event.dataTransfer.types.indexOf("Files") >= 0;
+    }
+
     function __randomId() {
         return Math.random().toString(32).substring(2);
     }
@@ -206,7 +210,11 @@ module.exports = function () {
         if (dropzone.$el) {
             dropzone.dragenter = function(e) {
                 __stop(e);
-                
+
+                if (!__containsFiles(e)) {
+                    return;
+                }
+
                 _this.dropzone.counter++;
                 
                 _this.$vm.dropzone.active = true;
@@ -214,7 +222,11 @@ module.exports = function () {
 
             dropzone.dragover = function(e) {
                 __stop(e);
-                
+
+                if (!__containsFiles(e)) {
+                    return;
+                }
+
                 e.dataTransfer.dropEffect = 'copy'; 
                 
                 _this.$vm.dropzone.active = true;
@@ -222,6 +234,10 @@ module.exports = function () {
 
             dropzone.dragleave = function(e) {
                 __stop(e);
+
+                if (!__containsFiles(e)) {
+                    return;
+                }
 
                 _this.dropzone.counter--;
 
@@ -232,6 +248,10 @@ module.exports = function () {
 
             dropzone.drop = function(e) {
                 __stop(e);
+
+                if (!__containsFiles(e)) {
+                    return;
+                }
 
                 _this.$vm.dropzone.active = false;
 
