@@ -100,6 +100,14 @@ For reference and to `key` in loops.
 
 Reference to raw file object from browser.
 
+`$instance`
+
+The instance of the named upload object.
+
+`$raw`
+
+A raw base64 format for the data useful for image previews. Not it will be `null` until the files `preview()` method is called since it can take a while to load up.
+
 `name`
 
 The name of the file.
@@ -133,6 +141,10 @@ Note that errors can come internally from the module itself or externally from a
 Use `parseErrors` option when installing the plugin to format errors from the server.
 
 The internal default format is: `[{code: 'somecode', msg: 'There was an error.''}]`
+
+`preview`
+
+Function to generate a raw format of the file useful for image previews.
 
 
 
