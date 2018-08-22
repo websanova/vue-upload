@@ -674,6 +674,13 @@ beforeDestroy() {
 
 ## Change Log
 
+### v1.1.x-beta
+
+* Fixed `option` setting for instance, in particular with `url` and `body`.
+* Added `preview()` method to files for generating raw data format. Useful for image previews.
+* Added `$raw` field for files for storing raw data. Note this will be `null` until `preview()` is called.
+* Fixed validation for when `startOnSelect` is set to false. The files will validate and set an error but remain in `queue` state.
+
 ### v1.0.x-beta
 
 * Update version to `1.0.x`.
