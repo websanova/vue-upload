@@ -334,6 +334,20 @@ module.exports = function () {
         this.$vm.files.all.splice(index, 1);
     }
 
+    function _getFilePreview(file, cb) {
+        var reader  = new FileReader();
+
+        reader.addEventListener('load', function () {
+            file.$raw = reader.result;
+
+            if (cb) { cb(file); }
+        }, false);
+
+        if (file.$file) {
+            reader.readAsDataURL(file.$file);
+        }
+    }
+
     function _select(files) {
         var i, ii,
             error,
@@ -359,13 +373,13 @@ module.exports = function () {
             return;
         }
 
-        this.onSelect(files);
-
         for (i = 0, ii = files.length; i < ii; i++) {
             (function (i) {
                 _queue.call(_this, files[i]);
             })(i);
         }
+
+        this.onSelect(files);
 
         if (this.options.startOnSelect) {
             _process.call(this);
@@ -375,8 +389,7 @@ module.exports = function () {
     function _queue(file) {
         var type,
             name,
-            extension,
-            _this = this;
+            extension;
 
         name = (file.name || '').split('.');
         type = (file.type || '').split('/');
@@ -391,8 +404,8 @@ module.exports = function () {
             $id: __randomId(),
             $file: file,
             $request: null,
-            url: this.options.url,
-            body: Object.assign({}, this.options.body),
+            $raw: null,
+            $instance: this,
             name: file.name,
             size: file.size,
             type: type,
@@ -403,7 +416,7 @@ module.exports = function () {
             errors: [],
             error: {},
             percentComplete: 0,
-            preview: null,
+            preview: function (cb) { _getFilePreview(file, cb); }
         };
 
         file.clear = function () {
@@ -414,6 +427,12 @@ module.exports = function () {
 
         this.$vm.files.all.push(file);
         this.$vm.files.queue.push(file);
+
+        // Pre error check but don't update any sets yet.
+        // Sometimes just need to know if queued item has an error.
+        if (!_valid.call(this, file)) {
+            this.onError(file);
+        }
 
         this.onQueue(file);
     }
@@ -504,6 +523,8 @@ module.exports = function () {
 
         file = this.$vm.files.queue[0];
 
+        // We will check error here again on process
+        // to officially deal with an error file.
         if (!_valid.call(this, file)) {
             _move.call(this, file, 'error');
             
@@ -534,12 +555,12 @@ module.exports = function () {
                 
         formData.append(this.options.name, file.$file);
         
-        for (key in file.body) {
+        for (key in file.$instance.options.body) {
             formData.append(key, file.body[key]);
         }
 
         request = this.options.http({
-            url: file.url,
+            url: file.$instance.options.url,
             body: formData,
             progress: function (e) {
                 file.percentComplete = e.lengthComputable ? Math.ceil(e.loaded / e.total * 100) : 0;
