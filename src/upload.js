@@ -387,7 +387,8 @@ module.exports = function () {
     }
 
     function _queue(file) {
-        var type,
+        var _this = this,
+            type,
             name,
             extension;
 
@@ -543,7 +544,8 @@ module.exports = function () {
     }
 
     function _upload(file) {
-        var formData,
+        var key,
+            formData,
             request,
             _this = this;
 
@@ -556,7 +558,7 @@ module.exports = function () {
         formData.append(this.options.name, file.$file);
         
         for (key in file.$instance.options.body) {
-            formData.append(key, file.body[key]);
+            formData.append(key, file.$instance.options.body[key]);
         }
 
         request = this.options.http({
