@@ -5,6 +5,7 @@ module.exports = function () {
     var __defaultOptions = {
         url: null,
         name: 'file',
+        accept: null,
         body: {},
         dropzoneId: null,
         onSelect: null,
@@ -168,7 +169,9 @@ module.exports = function () {
         input.type = 'file';
 
         input.multiple = this.options.multiple === true ? true : false;
-        
+
+        input.accept = this.options.accept ? this.options.accept : "*/*";
+
         input.style.display = 'none';
         
         input.onchange = function () {
