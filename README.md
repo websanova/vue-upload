@@ -477,6 +477,11 @@ function _parseErrors(error) {
 For multiple file uploads this must be set to `true`.
 
 
+### `accept: '*/*'`
+
+Set accept file types attribute on input element.
+
+
 ### `maxFilesInProgress: 2`
 
 Set the maximum number of uploads that can run in parallel when `async` is set to `true`.
@@ -676,6 +681,7 @@ beforeDestroy() {
 
 ### v1.1.x-beta
 
+* Add option for `accept` file types.
 * Fixed `option` setting for instance, in particular with `url` and `body`.
 * Added `preview()` method to files for generating raw data format. Useful for image previews.
 * Added `$raw` field for files for storing raw data. Note this will be `null` until `preview()` is called.
