@@ -681,6 +681,7 @@ beforeDestroy() {
 
 ### v1.1.x-beta
 
+* Add special case when setting `dropzone` id option to reset dropzone instance.
 * Add option for `accept` file types.
 * Fixed `option` setting for instance, in particular with `url` and `body`.
 * Added `preview()` method to files for generating raw data format. Useful for image previews.
