@@ -146,6 +146,14 @@ module.exports = function () {
 
     function _option(key, val) {
         this.options[key] = val;
+        
+        if (key === 'dropzone') {
+            _destroyDropzone.call(this);
+
+            this.dropzone = _initDropzone.call(this);
+
+            return;
+        }
     }
 
     function _destroy(name) {
