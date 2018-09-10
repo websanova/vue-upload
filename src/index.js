@@ -5,6 +5,7 @@ export default function install(Vue, options) {
 
     var _on = upload.on;
     var _bind = upload.bind;
+    var _option = upload.option;
 
     Object.defineProperties(Vue.prototype, {
         $upload: {
