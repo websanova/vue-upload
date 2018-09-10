@@ -740,6 +740,8 @@ module.exports = function () {
         _create(name);
 
         _option.call(__upload.instances[name], key, val);
+
+        _bind.call(__upload.instances[name], this);
     };
 
     Upload.prototype.errors = function (name) {

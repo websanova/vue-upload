@@ -681,6 +681,7 @@ beforeDestroy() {
 
 ### v1.1.x-beta
 
+* Fix to rebind when updating option functions.
 * Add special case when setting `dropzone` id option to reset dropzone instance.
 * Add option for `accept` file types.
 * Fixed `option` setting for instance, in particular with `url` and `body`.
