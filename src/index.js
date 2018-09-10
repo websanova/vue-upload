@@ -11,6 +11,7 @@ export default function install(Vue, options) {
             get: function () {
                 upload.on = _on.bind(this);
                 upload.bind = _bind.bind(this);
+                upload.option = _option.bind(this);
 
                 return upload;
             }
