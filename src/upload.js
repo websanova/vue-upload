@@ -383,7 +383,9 @@ module.exports = function () {
 
             // this.onEnd();
 
-            return;
+            // return;
+            
+            files = Array.prototype.slice.call(files, 0, this.options.maxFilesSelect);
         }
 
         for (i = 0, ii = files.length; i < ii; i++) {
