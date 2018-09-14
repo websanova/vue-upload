@@ -333,6 +333,8 @@ module.exports = function () {
         for (i = 0, ii = this.$vm.errors.length; i < ii; i++) {
             if (this.$vm.errors[i].file && this.$vm.errors[i].file.$id === file.$id) {
                 this.$vm.errors.splice(i, 1);
+
+                break;
             }
         }
 
