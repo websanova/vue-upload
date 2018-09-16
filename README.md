@@ -10,7 +10,6 @@ A simple, light weight and intuitive upload control for Vue.js.
 * Validation
 
 
-
 ## Install
 
 ```bash
@@ -31,6 +30,14 @@ OR
 Vue.use(require('@websanova/vue-upload').default);
 ```
 
+The project can also be 
+
+
+## CDN
+
+Available on jsdelivr or cdnjs.
+
+<script src="https://cdn.jsdelivr.net/npm/@websanova/vue-upload@1.1.7-beta"></script>
 
 
 ## Usage

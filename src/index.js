@@ -1,6 +1,6 @@
 var Upload = require('./upload.js')();
 
-export default function install(Vue, options) {
+function plugin(Vue, options) {
     var upload = new Upload(Vue, options);
 
     var _on = upload.on;
@@ -19,3 +19,9 @@ export default function install(Vue, options) {
         }
     });
 };
+
+if (typeof window !== 'undefined' && window.Vue) {
+    window.Vue.use(plugin);
+}
+
+export default plugin;
