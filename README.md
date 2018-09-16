@@ -30,15 +30,14 @@ OR
 Vue.use(require('@websanova/vue-upload').default);
 ```
 
-The project can also be 
-
 
 ## CDN
 
 Available on jsdelivr.
 
+```javascript
 <script src="https://cdn.jsdelivr.net/npm/@websanova/vue-upload@1.1.7-beta"></script>
-
+```
 
 ## Usage
 
