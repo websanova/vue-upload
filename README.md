@@ -35,7 +35,7 @@ The project can also be
 
 ## CDN
 
-Available on jsdelivr or cdnjs.
+Available on jsdelivr.
 
 <script src="https://cdn.jsdelivr.net/npm/@websanova/vue-upload@1.1.7-beta"></script>
 
