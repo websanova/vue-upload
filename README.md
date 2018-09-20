@@ -679,6 +679,10 @@ beforeDestroy() {
 
 ## Change Log
 
+### v1.2.x-beta
+
+* Fix issue with upload starting when calling `file.clear()`.
+
 ### v1.1.x-beta
 
 * Fix to rebind when updating option functions.

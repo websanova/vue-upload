@@ -436,7 +436,9 @@ module.exports = function () {
         file.clear = function () {
             _clearFile.call(_this, file);
 
-            _process.call(_this);
+            if (_this.$vm.meta.state === 'uploading') {
+                _process.call(_this);
+            }
         };
 
         this.$vm.files.all.push(file);
