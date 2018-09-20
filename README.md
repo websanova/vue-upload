@@ -269,7 +269,7 @@ This option is to be used in conjunction with the `startOnSelect` option when it
 Contains arrays of files currently being processed.
 
 * It contains multiple queues that can be used to display file data for viewing.
-* The queues are `all`, `queued`, `progress`, `upload`, `success`, `error`.
+* The queues are `all`, `queue`, `progress`, `upload`, `success`, `error`.
 * The array will not reset after completing (use `reset` and `onEnd` for that).
 
 ```vue
@@ -277,7 +277,7 @@ Contains arrays of files currently being processed.
     {{ file.name }}: {{ file.percentComplete }}%
 </div>
 
-<div v-for="file in $upload.files('product-gallery').queued">
+<div v-for="file in $upload.files('product-gallery').queue">
     {{ file.name }}: Queued for upload
 </div>
 ```
