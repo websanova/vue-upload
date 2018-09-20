@@ -152,6 +152,10 @@ The internal default format is: `[{code: 'somecode', msg: 'There was an error.''
 
 Function to generate a raw format of the file useful for image previews.
 
+`clear`
+
+Completely removes the file from the queues.
+
 
 
 ## Errors
@@ -352,16 +356,6 @@ This returns the global error state for the upload instance.
 </div>
 ```
 
-
-### `remove`
-
-Used for removing a single file from the `files` arrays.
-
-* This will remove the file from all files arrays where it exists.
-
-```javascript
-$upload.remove('product-gallery', file);
-```
 
 
 ### `option`
