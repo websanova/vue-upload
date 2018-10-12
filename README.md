@@ -10,25 +10,34 @@ A simple, light weight and intuitive upload control for Vue.js.
 * Validation
 
 
+
 ## Install
 
 ```bash
 $ sudo npm install @websanova/vue-upload
 ``` 
 
-Require in the project.
+The script is self installing if `Vue` is available.
 
 ```javascript
-import vueUpload from '@websanova/vue-upload';
+import 'vue';
+import '@websanova/vue-upload';
 
-Vue.use(vueUpload);
+Vue.upload.options.http = function () { ... };
+...
 ```
 
-OR
+Otherwise install it manually.
 
 ```javascript
-Vue.use(require('@websanova/vue-upload').default);
+import VueUpload from '@websanova/vue-upload';
+import Vue from `vue`;
+
+Vue.use(VueUpload, {
+    // options
+});
 ```
+
 
 
 ## CDN
@@ -38,6 +47,8 @@ Available on jsdelivr.
 ```javascript
 <script src="https://cdn.jsdelivr.net/npm/@websanova/vue-upload@1.1.7-beta"></script>
 ```
+
+
 
 ## Usage
 
@@ -681,6 +692,7 @@ beforeDestroy() {
 
 ### v1.2.x-beta
 
+* Add `vue.upload` instance reference.
 * Fix issue with upload starting when calling `file.clear()`.
 
 ### v1.1.x-beta

@@ -7,6 +7,8 @@ function plugin(Vue, options) {
     var _bind = upload.bind;
     var _option = upload.option;
 
+    Vue.upload = upload;
+
     Object.defineProperties(Vue.prototype, {
         $upload: {
             get: function () {
