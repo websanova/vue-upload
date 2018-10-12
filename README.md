@@ -72,9 +72,7 @@ created() {
 },
 
 mounted() {
-    this.$upload.option('profile-avatar', {
-        url: 'users/' + this.user.id + '/avatar'
-    });
+    this.$upload.option('profile-avatar', 'url', 'users/' + this.user.id + '/avatar');
 },
 ```
 
@@ -207,9 +205,7 @@ created() {
 },
 
 mounted() {
-    this.$upload.option('profile-avatar', {
-        url: 'users/' + this.$auth.user().id + '/avatar'
-    });
+    this.$upload.option('profile-avatar', 'url', 'users/' + this.$auth.user().id + '/avatar');
 },
 ```
 
@@ -537,9 +533,7 @@ created() {
 },
 
 mounted() {
-    this.$upload.option('product-gallery', {
-        url: `products/${this.product.id}/gallery`,
-    });
+    this.$upload.option('product-gallery', 'url', `products/${this.product.id}/gallery`);
 },
 
 beforeDestroy() {
@@ -587,9 +581,7 @@ created() {
 },
 
 mounted() {
-    this.$upload.option('profile-avatar', {
-        url: `users/${this.$auth.user().id}/avatar`
-    });
+    this.$upload.option('profile-avatar', 'url', '`users/${this.$auth.user().id}/avatar`');
 },
 ```
 
@@ -678,9 +670,7 @@ created() {
 },
 
 mounted() {
-    this.$upload.option('product-gallery', {
-        url: 'products/' + this.product.id + '/gallery'
-    });
+    this.$upload.option('product-gallery', 'url', 'products/' + this.product.id + '/gallery');
 },
 
 beforeDestroy() {
