@@ -377,7 +377,7 @@ module.exports = function () {
             //       I think not since also depends on
             //       existing state if selecting more files.
 
-            // this.onSelect([]);
+            this.onSelect(files);
 
             // this.onStart();
 
