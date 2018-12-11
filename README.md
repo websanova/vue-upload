@@ -27,7 +27,7 @@ Vue.upload.options.http = function () { ... };
 ...
 ```
 
-Otherwise install it manually.
+Otherwise, install it manually.
 
 ```javascript
 import VueUpload from '@websanova/vue-upload';
@@ -60,7 +60,7 @@ this.$upload.on('profile-avatar', {
 });
 ```
 
-It's likely things like the `id` would not be static so use the `option` method to update any options.
+Most likely, the `id` would not be static so use the `option` method to update any options.
 
 ```javascript
 created() {
@@ -121,7 +121,7 @@ The instance of the named upload object.
 
 `$raw`
 
-A raw base64 format for the data useful for image previews. Not it will be `null` until the files `preview()` method is called since it can take a while to load up.
+A raw base64 format for the data useful for image previews. Note that it will be `null` until the files `preview()` method is called since it can take a while to load up.
 
 `name`
 
@@ -141,7 +141,7 @@ Extension of the file from filename then mimetype based on what is available.
 
 `state`
 
-Current state of the file which will be either `queue`, `progress`, `upload`, `error` or `success`.
+Current state of the file. Could be one of the following: `queue`, `progress`, `upload`, `error` or `success`.
 
 `percentComplete`
 
@@ -163,7 +163,7 @@ Function to generate a raw format of the file useful for image previews.
 
 `clear`
 
-Completely removes the file from the queues.
+Completely removes the file from the queue.
 
 
 
