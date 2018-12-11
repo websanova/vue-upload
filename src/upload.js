@@ -48,6 +48,8 @@ module.exports = function () {
         if (res.data.msg) {
             return {code: res.data.code, msg: res.data.msg};
         }
+
+        return {};
     }
 
     function __http(data) {
