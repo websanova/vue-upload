@@ -446,11 +446,8 @@ module.exports = function () {
         this.$vm.files.all.push(file);
         this.$vm.files.queue.push(file);
 
-        // Pre error check but don't update any sets yet.
-        // Sometimes just need to know if queued item has an error.
-        if (!_valid.call(this, file)) {
-            this.onError(file);
-        }
+        // Check if error in case we want to know on queue.
+        _valid.call(this, file);
 
         this.onQueue(file);
     }
