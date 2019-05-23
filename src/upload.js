@@ -280,13 +280,6 @@ function _addError(error) {
 
     error = error || {};
 
-    if (error.unique) {
-        for (i = 0, ii = this.$vm.errors.length; i < ii; i++) {
-            if (this.$vm.errors[i].code === error.code) {
-                return;
-            }
-        }
-    }
     error = {
         file: error.file || null,
         code: error.code || null,
