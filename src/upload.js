@@ -371,21 +371,12 @@ function _select(files) {
         _this = this;
 
     if (files.length > this.options.maxFilesSelect) {
-        _addError.call(this, {
-            unique: true,
+
+        // Trigger on select with files and error.
+        this.onSelect(files, {
             code: 'file-max-select',
             msg: this.options.maxFilesSelectMsg.replace('{max}', this.options.maxFilesSelect)
         });
-
-        // NOTE: Not sure to trigger any hooks here.
-        //       I think not since also depends on
-        //       existing state if selecting more files.
-
-        this.onSelect(files);
-
-        // this.onStart();
-
-        // this.onEnd();
 
         return;
     }
