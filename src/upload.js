@@ -276,8 +276,6 @@ function _destroyDropzone() {
 }
 
 function _addError(error) {
-    var i, ii;
-
     error = error || {};
 
     error = {
