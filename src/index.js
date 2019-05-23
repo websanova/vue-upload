@@ -1,4 +1,4 @@
-var Upload = require('./upload.js')();
+import Upload from './upload.js';
 
 function plugin(Vue, options) {
     var upload = new Upload(Vue, options);
