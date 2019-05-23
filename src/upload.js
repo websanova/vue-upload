@@ -93,7 +93,7 @@ function _create(name) {
 }
 
 function _reset() {
-    var i, ii, vm,
+    var i, ii,
         _this = this;
 
     for (i = 0, ii = this.$vm.files.all.length; i < ii; i++) {
@@ -363,7 +363,6 @@ function _getFilePreview(file, cb) {
 
 function _select(files) {
     var i, ii,
-        error,
         _this = this;
 
     if (files.length > this.options.maxFilesSelect) {
@@ -452,7 +451,6 @@ function _queue(file) {
 
 function _index(file, queue) {
     var i, ii,
-        index,
         files;
 
     files = this.$vm.files[queue || file.state];
@@ -508,8 +506,7 @@ function _valid(file) {
 
 function _process() {
     var i, ii,
-        file,
-        valid;
+        file;
 
     if (this.$vm.files.progress.length >= this.options.maxFilesInProgress) {
         return;
