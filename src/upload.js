@@ -287,6 +287,11 @@ function _addError(error) {
             }
         }
     }
+    error = {
+        file: error.file || null,
+        code: error.code || null,
+        msg: error.msg ||null
+    };
 
     error.$id = __randomId();
     error.file = error.file || null;
