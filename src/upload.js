@@ -502,7 +502,11 @@ function _process() {
     }
 
     if (!this.$vm.files.queue.length) {
-        if (!this.$vm.files.progress.length && this.$vm.meta.state === 'uploading') {
+        if (
+            !this.$vm.files.upload.length &&
+            !this.$vm.files.progress.length &&
+            this.$vm.meta.state === 'uploading'
+        ) {
             this.$vm.meta.state = 'complete';
 
             // Reset all active to false.
