@@ -236,7 +236,8 @@ function _initDropzone() {
 
             _this.dropzone.counter--;
 
-            if (_this.dropzone.counter === 0) {
+            if (_this.dropzone.counter <= 0) {
+                _this.dropzone.counter = 0;
                 _this.$vm.dropzone.active = false;
             }
         };
@@ -244,6 +245,7 @@ function _initDropzone() {
         dropzone.drop = function(e) {
             __stop(e);
 
+            _this.dropzone.counter = 0;
             _this.$vm.dropzone.active = false;
 
             _select.call(_this, e.dataTransfer.files);
