@@ -51,10 +51,19 @@ function __parseErrors(res) {
 }
 
 function __http(data) {
+    var request = {};
+
     __upload.Vue
         .http
-        .post(data.url, data.body, {progress: data.progress})
+        .post(data.url, data.body, {
+            progress: data.progress,
+            before: (req) => {
+                request = req;
+            }
+        })
         .then(data.success, data.error);
+
+    return request;
 }
 
 function _create(name) {
