@@ -205,9 +205,11 @@ function _initInput() {
 }
 
 function _destroyInput() {
-    this.input.$el.parentNode.removeChild(this.input.$el);
+    if (this.input.$el) {
+        this.input.$el.parentNode.removeChild(this.input.$el);
 
-    this.input.$el = null;
+        this.input.$el = null;
+    }
 }
 
 function _initDropzone() {
