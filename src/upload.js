@@ -205,7 +205,10 @@ function _initInput() {
 }
 
 function _destroyInput() {
-    if (this.input.$el) {
+    if (
+        this.input &&
+        this.input.$el
+    ) {
         this.input.$el.parentNode.removeChild(this.input.$el);
 
         this.input.$el = null;
