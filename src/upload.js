@@ -57,7 +57,7 @@ function __http(data) {
         .http
         .post(data.url, data.body, {
             progress: data.progress,
-            before: (req) => {
+            before: function(req) {
                 request = req;
             }
         })
