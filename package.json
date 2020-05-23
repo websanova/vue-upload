@@ -19,7 +19,7 @@
     "unpkg": "dist/vue-upload.min.js",
     "jsdelivr": "dist/vue-upload.min.js",
   
-    "version": "1.3.4-beta",
+    "version": "1.4.0-beta",
   
     "repository": {
         "type": "git",
