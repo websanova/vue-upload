@@ -23,6 +23,7 @@ For any issues or errors with the plugin or docs:
 * [Guides](https://websanova.com/docs/vue-upload/guides)
 * [Methods](https://websanova.com/docs/vue-upload/methods)
 * [Options](https://websanova.com/docs/vue-upload/options)
+* [Files](https://websanova.com/docs/vue-upload/files)
 * [Changes](https://websanova.com/docs/vue-upload/changes)
 
 
