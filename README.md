@@ -20,6 +20,7 @@ For any issues or errors with the plugin or docs:
 
 ## Resources
 
+* [Home](https://websanova.com/docs/vue-upload)
 * [Guides](https://websanova.com/docs/vue-upload/guides)
 * [Methods](https://websanova.com/docs/vue-upload/methods)
 * [Options](https://websanova.com/docs/vue-upload/options)
