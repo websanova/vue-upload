@@ -17,6 +17,6 @@ module.exports = {
         config
             .resolve
             .alias
-            .set('@websanova/vue-auth', __dirname + '/../../');
+            .set('@websanova/vue-upload', __dirname + '/../../');
     }
 }

@@ -13,8 +13,17 @@ Vue.router = new VueRouter({
     base: __dirname,
     routes: [{
         path: '/',
-        name: 'site-home',
-        component: loadView('site/Home'),
+        redirect: {
+            name: 'site-single'
+        }
+    }, {
+        path: '/single',
+        name: 'site-single',
+        component: loadView('site/Single'),
+    }, {
+        path: '/multi',
+        name: 'site-multi',
+        component: loadView('site/Multi'),
     }]
 });
 
