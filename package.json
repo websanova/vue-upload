@@ -15,11 +15,11 @@
     },
   
     "main": "dist/vue-upload.common.js",
-    "module": "src/index.js",
+    "module": "dist/vue-upload.module.js",
     "unpkg": "dist/vue-upload.min.js",
     "jsdelivr": "dist/vue-upload.min.js",
   
-    "version": "1.4.0-beta",
+    "version": "1.4.1-beta",
   
     "repository": {
         "type": "git",
@@ -30,7 +30,6 @@
 
     "scripts": {
         "clear": "rm -rf dist/*",
-
         "build": "npm run clear; node build/build.js"
     },
 
