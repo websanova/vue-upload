@@ -65,6 +65,13 @@
         height: 150px;
     }
 
+    .gallery > img {
+        width: 50px;
+        height: 50px;
+        margin: 5px;
+        float: left;
+    }
+
     .spin {
         display: inline-block;
       /*width: 100px;*/

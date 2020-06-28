@@ -219,6 +219,10 @@ function _initDropzone() {
     var dropzone,
         _this = this;
         
+    console.log(this.options.dropzoneId);
+
+    console.log(document.getElementById(this.options.dropzoneId));
+
     dropzone = {
         $el: document.getElementById(this.options.dropzoneId),
         counter: 0,

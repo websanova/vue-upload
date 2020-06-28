@@ -72,7 +72,7 @@
             }
         },
 
-        created() {
+        mounted() {
             this.$upload.on('demo-single', {
                 url: 'demos/image',
                 accept: 'image/*',

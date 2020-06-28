@@ -15,7 +15,7 @@
     },
   
     "main": "dist/vue-upload.common.js",
-    "module": "dist/vue-upload.esm.js",
+    "module": "src/index.js",
     "unpkg": "dist/vue-upload.min.js",
     "jsdelivr": "dist/vue-upload.min.js",
   
