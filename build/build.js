@@ -12,10 +12,24 @@ const banner = `/*!\n * ${name} v${version}\n * ${homepage}\n * Released under t
 const files = [{
     input: 'src/index.js',
     name: 'vue-upload',
+}, {
+    input: 'drivers/http/vue-resource.js',
+    name: 'drivers/http/vue-resource'
+}, {
+    input: 'drivers/http/axios.js',
+    name: 'drivers/http/axios'
 }];
 
 if (!fs.existsSync('dist')){
     fs.mkdirSync('dist');
+}
+
+if (!fs.existsSync('dist/drivers')){
+    fs.mkdirSync('dist/drivers');
+}
+
+if (!fs.existsSync('dist/drivers/http')){
+    fs.mkdirSync('dist/drivers/http');
 }
 
 files.forEach((file) => {

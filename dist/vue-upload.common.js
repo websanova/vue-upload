@@ -1,5 +1,5 @@
 /*!
- * @websanova/vue-upload v1.4.1-beta
+ * @websanova/vue-upload v1.5.0-beta
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */
@@ -62,16 +62,12 @@ function __parseErrors(res) {
 }
 
 function __http(data) {
-  var request = {};
+  if (!__upload.http) {
+    console.error('VueUpload: http driver has not been set.');
+    return;
+  }
 
-  __upload.Vue.http.post(data.url, data.body, {
-    progress: data.progress,
-    before: function (req) {
-      request = req;
-    }
-  }).then(data.success, data.error);
-
-  return request;
+  return __upload.http.post.call(__upload, data);
 }
 
 function _create(name) {
@@ -603,6 +599,9 @@ function _percent() {
 }
 
 function Upload(Vue, options) {
+  // Init driver
+  this.http = options.http;
+  delete options.http;
   this.options = Object.assign({}, __defaultOptions, options);
   this.Vue = Vue;
   this.$vm = new Vue({
