@@ -1,18 +1,19 @@
 export default {
     post: function(data) {
+        var cancelTokenSource = this.Vue.axios.CancelToken.source();
+        
+        this.Vue
+            .axios
+            .post(data.url, data.body, {
+                onUploadProgress: data.progress,
+                cancelToken: cancelTokenSource.token,
+            })
+            .then(data.success, data.error);
 
-        var request = {};
-
-        // NOTE: Not a fan of axios, anyone who wants to contribute a
-        //       solution that supports the following can be my guest.
-        //
-        //       - progress
-        //       - success
-        //       - error
-        //       - abort
-        //
-        //       The request object should return an "abort()" method.
-
-        return request;
+        return {
+            abort: function () {
+                cancelTokenSource.cancel();
+            }
+        };
     }
 }
