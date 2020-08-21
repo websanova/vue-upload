@@ -10,6 +10,11 @@ If you like this plugin please consider sponsoring.
 * [Patreon](https://patreon.com/websanova)
 
 
+## Demo
+
+Check the [live demo](https://vue-upload.websanova.com) to see vue-upload in action.
+
+
 ## Issues
 
 For any issues or errors with the plugin or docs:
