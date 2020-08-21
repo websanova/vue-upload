@@ -1,9 +1,15 @@
 <template>
     <div>
+        <h1 class="text-center">
+            <a href="https://websanova.com">
+                <img src="/img/logo-dark-text.png" height="30" />
+            </a>
+        </h1>
+
         <h1
             class="text-center"
         >
-            Websanova Vue Upload Plugin Demo
+            Vue Upload Plugin Demo
         </h1>
 
         <div
@@ -57,7 +63,7 @@
         text-align: center;
     }
 
-    img {
+    div > img {
         border: solid #eaeaea 1px;
         border-radius: 5px;
         padding: 2px;
