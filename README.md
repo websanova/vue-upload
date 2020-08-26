@@ -7,6 +7,7 @@ A simple, light weight and intuitive upload control for Vue.js.
 
 If you like this plugin please consider sponsoring.
 
+* [GitHub](https://github.com/sponsors/websanova)
 * [Patreon](https://patreon.com/websanova)
 
 
@@ -37,4 +38,4 @@ For any issues or errors with the plugin or docs:
 
 MIT licensed
 
-Copyright (C) 2011-2012 Websanova https://websanova.com
+Copyright (C) 2011-2020 Websanova https://websanova.com
