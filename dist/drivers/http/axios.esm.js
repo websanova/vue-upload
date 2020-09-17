@@ -1,5 +1,5 @@
 /*!
- * @websanova/vue-upload v1.7.1
+ * @websanova/vue-upload v1.7.2
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */

@@ -1,5 +1,7 @@
 <template>
-    <div>
+    <div
+        style="max-width:500px; margin:0 auto 50px auto;"
+    >
         <h1 class="text-center">
             <a href="https://websanova.com">
                 <img src="/img/logo-dark-text.png" height="30" />
@@ -11,6 +13,16 @@
         >
             Vue Upload Plugin Demo
         </h1>
+
+        <hr/>
+        
+        <div class="text-center">
+            <a href="https://websanova.com/docs/vue-upload"><b>DOCS</b></a> |
+            <a href="https://github.com/websanova/vue-upload"><b>GITHUB</b></a> |
+            <a href="https://patreon.com/websanova"><b>PATREON</b></a>
+        </div>
+        
+        <hr/>
 
         <div
             class="text-center"
@@ -59,6 +71,16 @@
 </script>
 
 <style>
+    body {
+        font-family: Verdana;
+        font-size: 12px;
+    }
+
+    a {
+        color: #6699ff;
+        text-decoration: none;
+    }
+
     .text-center {
         text-align: center;
     }
