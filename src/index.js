@@ -1,21 +1,29 @@
-var Upload = require('./upload.js')();
+import Upload from './upload.js';
 
-module.exports = (function () {
+function plugin(Vue, options) {
+    var upload = new Upload(Vue, options);
 
-    return function install(Vue, options) {
-        var upload = new Upload(Vue, options),
-            _new = upload.new,
-            _reset = upload.reset;
+    var _on = upload.on;
+    var _bind = upload.bind;
+    var _option = upload.option;
 
-        Object.defineProperties(Vue.prototype, {
-            $upload: {
-                get: function () {
-                    upload.new = _new.bind(this);
-                    upload.reset = _reset.bind(this);
+    Vue.upload = upload;
 
-                    return upload;
-                }
+    Object.defineProperties(Vue.prototype, {
+        $upload: {
+            get: function () {
+                upload.on = _on.bind(this);
+                upload.bind = _bind.bind(this);
+                upload.option = _option.bind(this);
+
+                return upload;
             }
-        });
-    }
-})();
+        }
+    });
+};
+
+if (typeof window !== 'undefined' && window.Vue) {
+    window.Vue.use(plugin);
+}
+
+export default plugin;
