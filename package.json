@@ -1,38 +1,28 @@
 {
+    "version": "1.7.2",
     "name": "@websanova/vue-upload",
-
     "description": "A simple, light weight and intuitive upload control for Vue.js.",
-  
     "keywords": ["vue", "vue.js", "vuejs", "plugin", "file", "image", "img", "audio", "png", "jpeg", "upload", "dropzone"],
-
     "homepage": "https://websanova.com/docs/vue-upload",
-
     "author": {
         "name": "Websanova",
         "url": "http://websanova.com",
         "username": "websanova",
         "email": "rob@websanova.com"
     },
-  
     "main": "dist/vue-upload.common.js",
     "module": "dist/vue-upload.module.js",
     "unpkg": "dist/vue-upload.min.js",
     "jsdelivr": "dist/vue-upload.min.js",
-  
-    "version": "1.7.2",
-  
     "repository": {
         "type": "git",
         "url": "https://github.com/websanova/vue-upload"
     },
-  
     "licenses": "MIT, GPL",
-
     "scripts": {
         "clear": "rm -rf dist/*",
         "build": "npm run clear; node build/build.js"
     },
-
     "devDependencies": {
         "@babel/core": "^7.2.2",
         "@babel/preset-env": "^7.2.0",
