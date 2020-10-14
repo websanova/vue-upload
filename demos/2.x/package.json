@@ -1,7 +1,6 @@
 {
-    "name": "vue-upload",
+    "name": "vue-upload-demo-2x",
     "version": "0.0.0",
-    "private": true,
     "scripts": {
         "dev": "vue-cli-service serve",
         "build": "vue-cli-service build",
