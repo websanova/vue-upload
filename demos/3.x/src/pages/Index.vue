@@ -1,16 +1,17 @@
 <template>
-    Testing 123
-  <!-- <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3.0 + Vite" /> -->
+    <router-link :to="{name: 'site-single'}">single</router-link>
+
+    |
+
+    <router-link :to="{name: 'site-multi'}">multi</router-link>
+    
+    <hr/>
+
+    <router-view />
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
+    export default {
 
-export default {
-  name: 'App',
-  components: {
-    // HelloWorld
-  }
-}
+    }
 </script>

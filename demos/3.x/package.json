@@ -1,12 +1,14 @@
 {
     "name": "vue-upload-demo-3x",
+    "description": "Vue Uoload Demo 3.x",
     "version": "0.0.0",
     "scripts": {
         "dev": "vite",
         "build": "vite build"
     },
     "dependencies": {
-        "vue": "^3.0.0-rc.1"
+        "vue": "^3.0.0-rc.1",
+        "vue-router": "next"
     },
     "devDependencies": {
         "vite": "^1.0.0-rc.1",
