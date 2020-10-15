@@ -13,11 +13,13 @@
 <script>
     export default {
         mounted() {
+            this.$plugin.func();
+
             this.$store.dispatch('upload/test');
 
             this.$http({
                 url: 'demos/users/list'
-            })
+            });
         }
     }
 </script>
