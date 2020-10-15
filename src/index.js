@@ -1,16 +1,7 @@
-import {createApp} from 'vue';
-import Upload      from './upload.js';
+import Upload from './upload.js';
 
-// Install for Vue 3
-Upload.prototype.install = function (app) {
-    app.plugin = this;
-
-    app.config.globalProperties.$plugin = this;
-}
-
-// Install for Vue 2
-function install(Vue, options) {
-    var upload = new Upload(options, Vue);
+function plugin(Vue, options) {
+    var upload = new Upload(Vue, options);
 
     Vue.upload = upload;
     Vue.$upload = upload;
@@ -35,35 +26,7 @@ function install(Vue, options) {
 };
 
 if (typeof window !== 'undefined' && window.Vue) {
-    window.Vue.use(install);
+    window.Vue.use(plugin);
 }
 
-export function createPlugin(options) {
-    console.log(options);
-
-    var Vue = function (data) {
-
-        // TODO: Reactive instance here...
-
-
-        var instance = createApp(data);
-
-        console.log(instance.instances);
-
-        // this.instances = ref(//reactive instances here).
-
-    }
-
-
-    // this.$vm = new Vue({
-    //     data: function() {
-    //         return {
-    //             instances: {}
-    //         };
-    //     }
-    // });
-
-    return new Upload(Vue, options);
-}
-
-export default install;
+export default plugin;

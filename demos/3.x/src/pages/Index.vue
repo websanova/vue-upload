@@ -15,11 +15,18 @@
         mounted() {
             // this.$plugin.func();
 
-            this.$store.dispatch('upload/test');
+            this.$upload.on('upload-test', {
 
-            this.$http({
-                url: 'demos/users/list'
+
+
             });
+
+
+            // this.$store.dispatch('upload/test');
+
+            // this.$http({
+            //     url: 'demos/users/list'
+            // });
         }
     }
 </script>
