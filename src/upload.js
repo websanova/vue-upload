@@ -123,7 +123,7 @@ function _reset() {
     this.$vm.dropzone.active = false;
 }
 
-function _init(name, $ctx, options) {
+function _init(name, options) {
     var instance = __upload.instances[name];
 
     instance.options = Object.assign({}, __upload.options, options);
@@ -132,20 +132,20 @@ function _init(name, $ctx, options) {
     
     instance.dropzone = _initDropzone.call(instance);
 
-    _bind.call(instance, $ctx);
+    // _bind.call(instance, $ctx);
 }
 
-function _bind($ctx) {
-    this.onSelect = this.options.onSelect ? this.options.onSelect.bind($ctx) : function () {};
-    this.onStart = this.options.onStart ? this.options.onStart.bind($ctx) : function () {};
-    this.onQueue = this.options.onQueue ? this.options.onQueue.bind($ctx) : function () {};
-    this.onProgress = this.options.onProgress ? this.options.onProgress.bind($ctx) : function () {};
-    this.onUpload = this.options.onUpload ? this.options.onUpload.bind($ctx) : function () {};
-    this.onError = this.options.onError ? this.options.onError.bind($ctx) : function () {};
-    this.onSuccess = this.options.onSuccess ? this.options.onSuccess.bind($ctx) : function () {};
-    this.onComplete = this.options.onComplete ? this.options.onComplete.bind($ctx) : function () {};
-    this.onEnd = this.options.onEnd ? this.options.onEnd.bind($ctx) : function () {};
-}
+// function _bind($ctx) {
+//     this.onSelect = this.options.onSelect ? this.options.onSelect.bind($ctx) : function () {};
+//     this.onStart = this.options.onStart ? this.options.onStart.bind($ctx) : function () {};
+//     this.onQueue = this.options.onQueue ? this.options.onQueue.bind($ctx) : function () {};
+//     this.onProgress = this.options.onProgress ? this.options.onProgress.bind($ctx) : function () {};
+//     this.onUpload = this.options.onUpload ? this.options.onUpload.bind($ctx) : function () {};
+//     this.onError = this.options.onError ? this.options.onError.bind($ctx) : function () {};
+//     this.onSuccess = this.options.onSuccess ? this.options.onSuccess.bind($ctx) : function () {};
+//     this.onComplete = this.options.onComplete ? this.options.onComplete.bind($ctx) : function () {};
+//     this.onEnd = this.options.onEnd ? this.options.onEnd.bind($ctx) : function () {};
+// }
 
 function _option(key, val) {
     this.options[key] = val;
@@ -669,16 +669,16 @@ function Upload(Vue, options) {
 Upload.prototype.on = function (name, options) {
     _create(name);
 
-    _init(name, this, options);
+    _init(name, options);
 };
 
 Upload.prototype.off = function (name) {
     _destroy(name);
 };
 
-Upload.prototype.bind = function (name) {
-    _bind.call(__upload.instances[name], this);
-};
+// Upload.prototype.bind = function (name) {
+//     _bind.call(__upload.instances[name], this);
+// };
 
 Upload.prototype.reset = function (name) {
     _create(name);
@@ -745,7 +745,7 @@ Upload.prototype.option = function (name, key, val) {
 
     _option.call(__upload.instances[name], key, val);
 
-    _bind.call(__upload.instances[name], this);
+    // _bind.call(__upload.instances[name], this);
 };
 
 Upload.prototype.errors = function (name) {
