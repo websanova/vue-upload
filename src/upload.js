@@ -132,20 +132,20 @@ function _init(name, options) {
     
     instance.dropzone = _initDropzone.call(instance);
 
-    // _bind.call(instance, $ctx);
+    _bind.call(instance);
 }
 
-// function _bind($ctx) {
-//     this.onSelect = this.options.onSelect ? this.options.onSelect.bind($ctx) : function () {};
-//     this.onStart = this.options.onStart ? this.options.onStart.bind($ctx) : function () {};
-//     this.onQueue = this.options.onQueue ? this.options.onQueue.bind($ctx) : function () {};
-//     this.onProgress = this.options.onProgress ? this.options.onProgress.bind($ctx) : function () {};
-//     this.onUpload = this.options.onUpload ? this.options.onUpload.bind($ctx) : function () {};
-//     this.onError = this.options.onError ? this.options.onError.bind($ctx) : function () {};
-//     this.onSuccess = this.options.onSuccess ? this.options.onSuccess.bind($ctx) : function () {};
-//     this.onComplete = this.options.onComplete ? this.options.onComplete.bind($ctx) : function () {};
-//     this.onEnd = this.options.onEnd ? this.options.onEnd.bind($ctx) : function () {};
-// }
+function _bind() {
+    this.onSelect = this.options.onSelect || function () {};
+    this.onStart = this.options.onStart || function () {};
+    this.onQueue = this.options.onQueue || function () {};
+    this.onProgress = this.options.onProgress || function () {};
+    this.onUpload = this.options.onUpload || function () {};
+    this.onError = this.options.onError || function () {};
+    this.onSuccess = this.options.onSuccess || function () {};
+    this.onComplete = this.options.onComplete || function () {};
+    this.onEnd = this.options.onEnd || function () {};
+}
 
 function _option(key, val) {
     this.options[key] = val;
@@ -651,7 +651,7 @@ function Upload(Vue, options) {
 
     this.options = Object.assign({}, __defaultOptions, options);
 
-    this.Vue = Vue;
+    // this.Vue = Vue;
 
     this.$vm = new Vue({
         data: function() {

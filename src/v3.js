@@ -1,19 +1,31 @@
 import {reactive} from 'vue';
 import Upload     from './upload.js';
 
-Upload.prototype.install = function (app) {
-    app.upload = this;
+// NOTE: Create pseudo Vue object for Vue 2 backwards compatibility.
 
-    app.config.globalProperties.$upload = this;
-}
+function Vue (obj) {
+    var i,
+        data = obj.data();
 
-function Vue (data) {
-    this.instances = reactive({});
+    for (i in data) {
+        this[i] = reactive(Object.assign({}, data[i]));
+    }
 }
 
 Vue.set = function (obj, name, val) {
     obj[name] = reactive(val);
 }
+
+Upload.prototype.install = function (app) {
+    this.Vue = Vue;
+    this.ctx = app;
+
+    app.upload = this;
+
+    app.config.globalProperties.$upload = this;
+}
+
+//
 
 export function createPlugin(options) {
     return new Upload(Vue, options);
