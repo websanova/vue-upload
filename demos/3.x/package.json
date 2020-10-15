@@ -8,7 +8,9 @@
     },
     "dependencies": {
         "vue": "^3.0.0-rc.1",
-        "vue-router": "next"
+        "vuex": "4.0.0-beta.4",
+        "vue-router": "next",
+        "axios": "0.20.0"
     },
     "devDependencies": {
         "vite": "^1.0.0-rc.1",

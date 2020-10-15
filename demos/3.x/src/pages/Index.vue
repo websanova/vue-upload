@@ -12,6 +12,12 @@
 
 <script>
     export default {
+        mounted() {
+            this.$store.dispatch('upload/test');
 
+            this.$http({
+                url: 'demos/users/list'
+            })
+        }
     }
 </script>

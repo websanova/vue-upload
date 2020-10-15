@@ -1,4 +1,4 @@
-import {createRouter, createWebHistory} from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router';
 
 function loadView(view) {
     return () => import(`../pages/${view}.vue`);
@@ -26,6 +26,6 @@ const router = createRouter({
             path: '/'
         }
     }]
-})
+});
 
-export default router
+export default router;
