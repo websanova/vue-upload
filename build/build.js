@@ -9,28 +9,37 @@ const replace = require('rollup-plugin-replace');
 const {name, version, homepage} = require('../package.json');
 const banner = `/*!\n * ${name} v${version}\n * ${homepage}\n * Released under the MIT License.\n */\n`;
 
+// Dirs
+
+const dirs = [
+    'dist',
+    'dist/drivers',
+    'dist/drivers/http',
+    'dist/v2',
+    'dist/v3'
+];
+
+dirs.forEach((dir) => {
+    if (!fs.existsSync(dir)){
+        fs.mkdirSync(dir);
+    }
+});
+
+// Files
+
 const files = [{
-    input: 'src/index.js',
-    name: 'vue-upload',
+    input: 'src/v2.js',
+    name: 'v2/vue-upload',
 }, {
-    input: 'drivers/http/vue-resource.js',
+    input: 'src/v3.js',
+    name: 'v3/vue-upload',
+}, {
+    input: 'src/drivers/http/vue-resource.js',
     name: 'drivers/http/vue-resource'
 }, {
-    input: 'drivers/http/axios.js',
+    input: 'src/drivers/http/axios.js',
     name: 'drivers/http/axios'
 }];
-
-if (!fs.existsSync('dist')){
-    fs.mkdirSync('dist');
-}
-
-if (!fs.existsSync('dist/drivers')){
-    fs.mkdirSync('dist/drivers');
-}
-
-if (!fs.existsSync('dist/drivers/http')){
-    fs.mkdirSync('dist/drivers/http');
-}
 
 files.forEach((file) => {
 
@@ -64,6 +73,8 @@ files.forEach((file) => {
     .catch(logError);
 
 });
+
+//
 
 function read(path) {
     return fs.readFileSync(path, 'utf8');
