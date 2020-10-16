@@ -1,5 +1,5 @@
 /*!
- * @websanova/vue-upload v1.7.3
+ * @websanova/vue-upload v1.8.0
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */
@@ -51,15 +51,17 @@
     }
 
     function __parseErrors(res) {
-      if (res.data.errors) {
-        return res.data.errors[0] || {};
-      }
+      if (res && res.data) {
+        if (res.data.errors) {
+          return res.data.errors[0] || {};
+        }
 
-      if (res.data.msg) {
-        return {
-          code: res.data.code,
-          msg: res.data.msg
-        };
+        if (res.data.msg) {
+          return {
+            code: res.data.code,
+            msg: res.data.msg
+          };
+        }
       }
 
       return {};
@@ -129,25 +131,33 @@
       this.$vm.dropzone.active = false;
     }
 
-    function _init(name, $ctx, options) {
+    function _init(name, options) {
       var instance = __upload.instances[name];
       instance.options = Object.assign({}, __upload.options, options);
       instance.input = _initInput.call(instance);
       instance.dropzone = _initDropzone.call(instance);
 
-      _bind.call(instance, $ctx);
+      _bind.call(instance);
     }
 
-    function _bind($ctx) {
-      this.onSelect = this.options.onSelect ? this.options.onSelect.bind($ctx) : function () {};
-      this.onStart = this.options.onStart ? this.options.onStart.bind($ctx) : function () {};
-      this.onQueue = this.options.onQueue ? this.options.onQueue.bind($ctx) : function () {};
-      this.onProgress = this.options.onProgress ? this.options.onProgress.bind($ctx) : function () {};
-      this.onUpload = this.options.onUpload ? this.options.onUpload.bind($ctx) : function () {};
-      this.onError = this.options.onError ? this.options.onError.bind($ctx) : function () {};
-      this.onSuccess = this.options.onSuccess ? this.options.onSuccess.bind($ctx) : function () {};
-      this.onComplete = this.options.onComplete ? this.options.onComplete.bind($ctx) : function () {};
-      this.onEnd = this.options.onEnd ? this.options.onEnd.bind($ctx) : function () {};
+    function _bind() {
+      this.onSelect = this.options.onSelect || function () {};
+
+      this.onStart = this.options.onStart || function () {};
+
+      this.onQueue = this.options.onQueue || function () {};
+
+      this.onProgress = this.options.onProgress || function () {};
+
+      this.onUpload = this.options.onUpload || function () {};
+
+      this.onError = this.options.onError || function () {};
+
+      this.onSuccess = this.options.onSuccess || function () {};
+
+      this.onComplete = this.options.onComplete || function () {};
+
+      this.onEnd = this.options.onEnd || function () {};
     }
 
     function _option(key, val) {
@@ -606,8 +616,8 @@
       // Init driver
       this.http = options.http;
       delete options.http;
-      this.options = Object.assign({}, __defaultOptions, options);
-      this.Vue = Vue;
+      this.options = Object.assign({}, __defaultOptions, options); // this.Vue = Vue;
+
       this.$vm = new Vue({
         data: function () {
           return {
@@ -622,16 +632,15 @@
     Upload.prototype.on = function (name, options) {
       _create(name);
 
-      _init(name, this, options);
+      _init(name, options);
     };
 
     Upload.prototype.off = function (name) {
       _destroy(name);
-    };
+    }; // Upload.prototype.bind = function (name) {
+    //     _bind.call(__upload.instances[name], this);
+    // };
 
-    Upload.prototype.bind = function (name) {
-      _bind.call(__upload.instances[name], this);
-    };
 
     Upload.prototype.reset = function (name) {
       _create(name);
@@ -697,9 +706,8 @@
     Upload.prototype.option = function (name, key, val) {
       _create(name);
 
-      _option.call(__upload.instances[name], key, val);
+      _option.call(__upload.instances[name], key, val); // _bind.call(__upload.instances[name], this);
 
-      _bind.call(__upload.instances[name], this);
     };
 
     Upload.prototype.errors = function (name) {
@@ -709,18 +717,13 @@
     };
 
     function plugin(Vue, options) {
-      var upload = new Upload(Vue, options);
-      var _on = upload.on;
-      var _bind = upload.bind;
-      var _option = upload.option;
-      Vue.upload = upload;
+      Vue.upload = new Upload(Vue, options);
+      Vue.upload.Vue = Vue;
+      Vue.upload.ctx = Vue;
       Object.defineProperties(Vue.prototype, {
         $upload: {
           get: function () {
-            upload.on = _on.bind(this);
-            upload.bind = _bind.bind(this);
-            upload.option = _option.bind(this);
-            return upload;
+            return Vue.upload;
           }
         }
       });
