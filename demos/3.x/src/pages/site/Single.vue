@@ -4,118 +4,132 @@
     >
         <div class="mb-2 thumbnail">
             <img
-                :src="_image"
+                :src="state._image"
             />
         </div>
 
         <div class="mb-2">
             <button
-                v-show="!_file.state || _file.state === 'success' || _file.state === 'error'"
-                @click="$upload.select('demo-single')"
+                v-show="!state._file.state || state._file.state === 'success' || state._file.state === 'error'"
+                @click="select"
             >
                 Upload
             </button>
 
             <button
-                v-show="_file.state === 'queue'"
-                @click="$upload.start('demo-single')"
+                v-show="state._file.state === 'queue'"
+                @click="start"
             >
                 Start
             </button>
 
             <button
-                v-show="_file.state === 'progress' || _file.state === 'upload'"
+                v-show="state._file.state === 'progress' || state._file.state === 'upload'"
                 disabled
             >
                 <span
-                    v-show="_file.sending"
+                    v-show="state._file.sending"
                     class="spinner"
                 />
 
-                {{ _file.percentComplete }}%
+                {{ state._file.percentComplete }}%
             </button>
         </div>
 
         <div
-            v-show="_file.state"
+            v-show="state._file.state"
         >
-            {{ _file.name }}
-
-            - 
-            
-            {{ _file.state }}
+            {{ state._file.name }} - {{ state._file.state }}
         </div>
     </div>
 </template>
 
 <script>
+    import {reactive          } from 'vue';
+    import {computed          } from 'vue';
+    import {onMounted         } from 'vue';
+    import {onBeforeUnmount   } from 'vue';
+    import {getCurrentInstance} from 'vue';
+
     export default {
-        data() {
-            return {
+        setup() {
+            const ctx = getCurrentInstance().ctx;
+
+            const state = reactive({
                 file: {
                     image: null
                 },
-            }
-        },
-
-        computed: {
-            _file() {
-                return this.$upload.file('demo-single');
-            },
-
-            _image() {
-                return this.file.image || '//www.gravatar.com/avatar/?d=robohash&s=320';
-            }
-        },
-
-        mounted() {
-            this.$upload.on('demo-single', {
-                url: 'demos/image',
-                accept: 'image/*',
-                startOnSelect: false,
-                maxSizePerFile: 1024 * 1024 * 3,
-                extensions: ['gif', 'png', 'jpg', 'jpeg'],
-                onSelect: (files, res) => {
-                    console.log('onSelect');
-                    console.log(files);
-
-                    // Add some additional data to the request.
-                    this.$upload.option('demo-single', 'body', {
-                        some_id: 1
-                    });
-
-                    // Load a preview first.
-                    this.$upload.file('demo-single').preview((file) => {
-                        this.file.image = file.$raw;
-                    });
-                },
-                onProgress(file, res) {
-                    console.log('onProgress');
-                    console.log(file);
-                    console.log(res);
-                },
-                onSuccess: (file, res) => {
-                    console.log('onSuccess');
-                    console.log(file);
-                    console.log(res);
-
-                    // On success we can update whatever we need
-                    // to locally, for instance the user avatar.
-                    this.file = res.data.data;
-                },
-                onError: (file, res) => {
-                    console.log('onError');
-                    console.log(file);
-                    console.log(res);
-                },
-                onEnd(files, res) {
-                    console.log('onEnd');
-                }
+                _file: computed(() => {
+                    return ctx.$upload.file('demo-single');
+                }),
+                _image: computed(() => {
+                    return state.file.image || '//www.gravatar.com/avatar/?d=robohash&s=320';
+                })
             });
-        },
 
-        beforeUnmount() {
-            this.$upload.off('demo-single');
+            function select() {
+                ctx.$upload.select('demo-single');
+            }
+
+            function start() {
+                ctx.$upload.start('demo-single');
+            }
+
+            onMounted(() => {
+                ctx.$upload.on('demo-single', {
+                    url: 'demos/image',
+                    accept: 'image/*',
+                    startOnSelect: false,
+                    maxSizePerFile: 1024 * 1024 * 3,
+                    extensions: ['gif', 'png', 'jpg', 'jpeg'],
+                    onSelect: (files, res) => {
+                        console.log('onSelect');
+                        console.log(files);
+
+                        // Add some additional data to the request.
+                        ctx.$upload.option('demo-single', 'body', {
+                            some_id: 1
+                        });
+
+                        // Load a preview first.
+                        ctx.$upload.file('demo-single').preview((file) => {
+                            state.file.image = file.$raw;
+                        });
+                    },
+                    onProgress(file, res) {
+                        console.log('onProgress');
+                        console.log(file);
+                        console.log(res);
+                    },
+                    onSuccess: (file, res) => {
+                        console.log('onSuccess');
+                        console.log(file);
+                        console.log(res);
+
+                        // On success we can update whatever we need
+                        // to locally, for instance the user avatar.
+                        state.file = res.data.data;
+                    },
+                    onError: (file, res) => {
+                        console.log('onError');
+                        console.log(file);
+                        console.log(res);
+                    },
+                    onEnd(files, res) {
+                        console.log('onEnd');
+                    }
+                });
+            });
+
+            onBeforeUnmount(() => {
+                ctx.$upload.off('demo-single');
+            });
+
+            return {
+                state,
+                start,
+                select,
+            };
         }
     }
 </script>
