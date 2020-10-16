@@ -39,12 +39,14 @@ function __randomId() {
 }
 
 function __parseErrors(res) {
-    if (res.data.errors) {
-        return res.data.errors[0] || {};
-    }
+    if (res && res.data) {
+        if (res.data.errors) {
+            return res.data.errors[0] || {};
+        }
 
-    if (res.data.msg) {
-        return {code: res.data.code, msg: res.data.msg};
+        if (res.data.msg) {
+            return {code: res.data.code, msg: res.data.msg};
+        }
     }
 
     return {};
