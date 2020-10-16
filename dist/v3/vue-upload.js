@@ -1,5 +1,5 @@
 /*!
- * @websanova/vue-upload v1.8.0
+ * @websanova/vue-upload v1.8.1
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */
@@ -737,11 +737,11 @@
     }; //
 
 
-    function createPlugin(options) {
+    function createUpload(options) {
       return new Upload(Vue, options);
     }
 
-    exports.createPlugin = createPlugin;
+    exports.createUpload = createUpload;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

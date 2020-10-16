@@ -1,5 +1,5 @@
 /*!
- * @websanova/vue-upload v1.8.0
+ * @websanova/vue-upload v1.8.1
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */
@@ -737,8 +737,8 @@ Upload.prototype.install = function (app) {
 }; //
 
 
-function createPlugin(options) {
+function createUpload(options) {
   return new Upload(Vue, options);
 }
 
-exports.createPlugin = createPlugin;
+exports.createUpload = createUpload;
