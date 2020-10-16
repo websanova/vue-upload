@@ -27,6 +27,6 @@ Upload.prototype.install = function (app) {
 
 //
 
-export function createPlugin(options) {
+export function createUpload(options) {
     return new Upload(Vue, options);
 }
