@@ -2,6 +2,8 @@
 
 A simple, light weight and intuitive upload control for Vue.js.
 
+**NOTE:** Supports Vue 2 and Vue 3. Check [Startup Guide](https://websanova.com/docs/vue-upload/guides/startup) for more details on usage.
+
 
 ## Sponsor
 
