@@ -1,109 +1,110 @@
 <template>
-    <div
-        style="max-width: 400px; margin: 0 auto;"
-    >
-        <div>
-            <button
-                @click="$upload.select('demo-multi')"
-            >
-                Select Files
-            </button>
+    <div>
+        <ul class="spacer mb-2">
+            <li>
+                <button
+                    @click="select"
+                >
+                    Select Files
+                </button>
+            </li>
 
-            &nbsp;
+            <li>
+                <button
+                    v-show="_meta.state === 'complete'"
+                    @click="reset"
+                >
+                    Reset
+                </button>
+            </li>
+        </ul>
 
-            <button
-                v-show="$upload.meta('demo-multi').state === 'complete'"
-                @click="$upload.reset('demo-multi')"
-            >
-                Reset
-            </button>
-        </div>
-        
-        <br/>
-
-        <div>
-            <b>Complete</b>
-        </div>
-
-        <div
-            class="gallery"
-        >
-            <img
-                v-for="file in files"
-                :src="file.image"
-            />
-        </div>
-
-        <div style="clear:both;"></div>
+        <ul class="spacer">
+            <li v-for="file in files">
+                <div class="thumbnail thumbnail-sm">
+                    <img :src="file.image" />
+                </div>
+            </li>
+        </ul>
 
         <hr/>
 
-        <div>
-            <b>Uploading</b>
+        <div class="media py-0">
+            <div class="media-middle text-bold">
+                Files
+            </div>
 
-            -
-
-            {{ $upload.meta('demo-multi').state }}
-
-            -
-
-            <span
-                v-show="$upload.meta('demo-multi').state === 'uploading'"
-                class="spin"
-            >+</span>
-
-            {{ $upload.meta('demo-multi').percentComplete }}
+            <div class="media-tight media-middle media-right">
+                <span
+                    v-show="_meta.state === 'uploading'"
+                    class="spinner"
+                />
+                
+                <span class="text-muted text-sm mx-1">
+                    ({{ _meta.percentComplete }}%)
+                </span>
+                
+                {{ _meta.state }}
+            </div>
         </div>
 
         <div
             v-for="error in errors"
-            style="color:red;"
+            class="text-danger"
         >
             {{ error.msg }}
         </div>
 
         <div
             v-for="file in _files.all"
+            class="media py-0"
         >
-            {{ file.name }}
+            <div class="media-middle">
+                {{ file.name }}
 
-            - 
-            
-            {{ file.state }}
+                <div
+                    v-if="file.error"
+                    class="w-100 text-danger text-sm"
+                >
+                    {{ file.error.msg }}
+                </div>
 
-            - 
+                <div class="w-100">
+                    <button
+                        v-show="file.state === 'queue' || file.state === 'progress' || file.state === 'upload'"
+                        @click="file.clear()"
+                        class="btn-sm"
+                    >
+                        cancel
+                    </button>
 
-            <span
-                v-show="file.sending"
-            >
+                    <button
+                        v-show="file.state === 'success' || file.state === 'error'"
+                        @click="file.clear()"
+                        class="btn-sm"
+                    >
+                        clear
+                    </button>
+                </div>
+            </div>
+
+            <div class="media-tight media-middle media-right">
                 <span
-                    class="spin"
-                >+</span>
+                    v-show="file.sending"
+                    class="spinner"
+                />
 
-                {{ file.percentComplete }}%
-            </span>
-
-            <button
-                v-show="file.state === 'queue' || file.state === 'progress'"
-                @click="file.clear()"
-            >
-                cancel
-            </button>
-
-            <button
-                v-show="file.state === 'success' || file.state === 'error'"
-                @click="file.clear()"
-            >
-                clear
-            </button>
+                <span class="text-muted text-sm mx-1">
+                    ({{ file.percentComplete }}%)
+                </span>
+                
+                {{ file.state }}
+            </div>
         </div>
 
-        <br/>
+        <hr/>
 
-        <div
-            id="dropzone"
-            style="height: 200px; border: dashed 2px; background-color: #fafafa; text-align:center; line-height: 200px;"
-        >
+        <div id="dropzone">
             (drop files here to upload)
         </div>
     </div>
@@ -119,6 +120,10 @@
         },
 
         computed: {
+            _meta() {
+                return this.$upload.meta('demo-multi');
+            },
+
             _files() {
                 return this.$upload.files('demo-multi');
             }
@@ -181,8 +186,28 @@
             });
         },
 
+        methods: {
+            select() {
+                this.$upload.select('demo-multi');
+            },
+
+            reset() {
+                this.$upload.reset('demo-multi');
+            }
+        },
+
         beforeDestroy() {
             this.$upload.off('demo-multi');
         }
     }
 </script>
+
+<style scoped>
+    #dropzone {
+        height: 200px;
+        line-height: 200px;
+        border: dashed 2px;
+        background-color: #fafafa;
+        text-align:center;
+    }
+</style>

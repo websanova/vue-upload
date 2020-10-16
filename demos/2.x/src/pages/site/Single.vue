@@ -2,25 +2,23 @@
     <div
         class="text-center"
     >
-        <div>
+        <div class="mb-2 thumbnail">
             <img
                 :src="_image"
             />
         </div>
 
-        <br/>
-
-        <div>
+        <div class="mb-2">
             <button
                 v-show="!_file.state || _file.state === 'success' || _file.state === 'error'"
-                @click="$upload.select('demo-single')"
+                @click="select"
             >
                 Upload
             </button>
 
             <button
                 v-show="_file.state === 'queue'"
-                @click="$upload.start('demo-single')"
+                @click="start"
             >
                 Start
             </button>
@@ -31,23 +29,17 @@
             >
                 <span
                     v-show="_file.sending"
-                    class="spin"
-                >+</span>
+                    class="spinner"
+                />
 
                 {{ _file.percentComplete }}%
             </button>
         </div>
-        
-        <br/>
 
         <div
             v-show="_file.state"
         >
-            {{ _file.name }}
-
-            - 
-            
-            {{ _file.state }}
+            {{ _file.name }} - {{ _file.state }}
         </div>
     </div>
 </template>
@@ -116,6 +108,16 @@
                     console.log('onEnd');
                 }
             });
+        },
+
+        methods: {
+            select() {
+                this.$upload.select('demo-single');
+            },
+
+            start() {
+                this.$upload.start('demo-single');
+            }
         },
 
         beforeDestroy() {

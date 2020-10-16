@@ -137,7 +137,7 @@
             }
 
             function reset() {
-                ctx.$upload.reset('demo-multi')
+                ctx.$upload.reset('demo-multi');
             }
 
             onMounted(() => {
