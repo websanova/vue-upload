@@ -68,7 +68,7 @@ files.forEach((file) => {
         bundle.generate({
             banner,
             format: 'cjs'
-        }).then(({code}) => write(`dist/${file.name}.common.js`, code, bundle))
+        }).then(({code}) => write(`dist/${file.name}.cjs.js`, code, bundle))
     )
     .catch(logError);
 
