@@ -1,32 +1,25 @@
 <template>
-    <router-link :to="{name: 'site-single'}">single</router-link>
-
-    |
-
-    <router-link :to="{name: 'site-multi'}">multi</router-link>
-    
-    <hr/>
-
-    <router-view />
+    <el-layout
+        title="Vue Upload 3.x Demo"
+        package="vue-upload"
+        :links="[{
+            to: {name: 'site-single'},
+            text: 'single'
+        }, {
+            to: {name: 'site-multi'},
+            text: 'multi'
+        }]"
+    >
+        <router-view />
+    </el-layout>
 </template>
 
 <script>
+    import elLayout from '../elements/Layout.vue';
+
     export default {
-        mounted() {
-            // this.$plugin.func();
-
-            this.$upload.on('upload-test', {
-
-
-
-            });
-
-
-            // this.$store.dispatch('upload/test');
-
-            // this.$http({
-            //     url: 'demos/users/list'
-            // });
+        components: {
+            elLayout,
         }
     }
 </script>

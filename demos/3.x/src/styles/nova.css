@@ -44,6 +44,7 @@ body {
 .media > div {
     display: flex;
     flex: 1;
+    flex-flow: row wrap;
 }
 
 .media > .media-tight {
@@ -54,6 +55,10 @@ body {
 
 .media > .media-middle {
     align-items: center;
+}
+
+.media > .media-right {
+    justify-content: right;
 }
 
 /**************************************
@@ -121,20 +126,38 @@ ul.spacer-pipe > li:not(:last-child)::after {
 /**************************************
  * DISPLAY
  **************************************/
-.px-1 {padding-left: 0.5em; padding-right: 0.5em;}
-.px-2 {padding-left: 0.8em; padding-right: 0.8em;}
-.px-3 {padding-left: 1.3em; padding-right: 1.3em;}
-.px-4 {padding-left: 2em; padding-right: 2em;}
+.px-1 {padding-left: 0.5em !important; padding-right: 0.5em !important;}
+.px-2 {padding-left: 0.8em !important; padding-right: 0.8em !important;}
+.px-3 {padding-left: 1.3em !important; padding-right: 1.3em !important;}
+.px-4 {padding-left: 2em !important; padding-right: 2em !important;}
 
-.py-1 {padding-top: 0.5em; padding-bottom: 0.5em;}
-.py-2 {padding-top: 0.8em; padding-bottom: 0.8em;}
-.py-3 {padding-top: 1.3em; padding-bottom: 1.3em;}
-.py-4 {padding-top: 2em; padding-bottom: 2em;}
+.py-0 {padding-top: 0em !important; padding-bottom: 0em !important;}
+.py-1 {padding-top: 0.5em !important; padding-bottom: 0.5em !important;}
+.py-2 {padding-top: 0.8em !important; padding-bottom: 0.8em !important;}
+.py-3 {padding-top: 1.3em !important; padding-bottom: 1.3em !important;}
+.py-4 {padding-top: 2em !important; padding-bottom: 2em !important;}
 
-.mx-1 {margin-left: 0.5em; margin-right: 0.5em;}
-.mx-2 {margin-left: 0.8em; margin-right: 0.8em;}
-.mx-3 {margin-left: 1.3em; margin-right: 1.3em;}
-.mx-4 {margin-left: 2em; margin-right: 2em;}
+.mx-1 {margin-left: 0.5em !important; margin-right: 0.5em !important;}
+.mx-2 {margin-left: 0.8em !important; margin-right: 0.8em !important;}
+.mx-3 {margin-left: 1.3em !important; margin-right: 1.3em !important;}
+.mx-4 {margin-left: 2em !important; margin-right: 2em !important;}
+
+.my-0 {margin-top: 0em !important; margin-bottom: 0em !important;}
+.my-1 {margin-top: 0.5em !important; margin-bottom: 0.5em !important;}
+.my-2 {margin-top: 0.8em !important; margin-bottom: 0.8em !important;}
+.my-3 {margin-top: 1.3em !important; margin-bottom: 1.3em !important;}
+.my-4 {margin-top: 2em !important; margin-bottom: 2em !important;}
+
+.mb-1 {margin-bottom: 0.5em !important;}
+.mb-2 {margin-bottom: 0.8em !important;}
+.mb-3 {margin-bottom: 1.3em !important;}
+.mb-4 {margin-bottom: 2em !important;}
+
+/**************************************
+ * SPACING
+ **************************************/
+
+.w-100 {width:100%;}
 
 /**************************************
  * SPINNER
@@ -185,6 +208,30 @@ ul.spacer-pipe > li:not(:last-child)::after {
 }
 
 /**************************************
+ * THUMBNAIL
+ **************************************/
+.thumbnail {
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    line-height: 142px;
+    padding: 2px;
+    text-align: center;
+    border: solid #eaeaea 1px;
+}
+
+.thumbnail > img {
+    width: 100%;
+}
+
+.thumbnail-sm {
+    width: 100px;
+    height: 100px;
+    line-height: 92px;
+}
+
+
+/**************************************
  * HR
  **************************************/
 hr {
@@ -203,10 +250,17 @@ h1 {
 /**************************************
  * BUTTON
  **************************************/
+.btn,
 button {
     font-size: 0.8em;
     padding: 4px 8px
 }
+
+.btn-sm {
+    font-size: 0.6em;
+    padding: 2px 6px;
+}
+
 
 /**************************************
  * SELECT

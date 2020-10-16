@@ -2,15 +2,13 @@
     <div
         class="text-center"
     >
-        <div>
+        <div class="mb-2 thumbnail">
             <img
                 :src="_image"
             />
         </div>
 
-        <br/>
-
-        <div>
+        <div class="mb-2">
             <button
                 v-show="!_file.state || _file.state === 'success' || _file.state === 'error'"
                 @click="$upload.select('demo-single')"
@@ -31,14 +29,12 @@
             >
                 <span
                     v-show="_file.sending"
-                    class="spin"
-                >+</span>
+                    class="spinner"
+                />
 
                 {{ _file.percentComplete }}%
             </button>
         </div>
-        
-        <br/>
 
         <div
             v-show="_file.state"
