@@ -1,21 +1,23 @@
 <template>
     <div>
-        <div class="mb-2">
-            <button
-                @click="$upload.select('demo-multi')"
-            >
-                Select Files
-            </button>
+        <ul class="spacer mb-2">
+            <li>
+                <button
+                    @click="$upload.select('demo-multi')"
+                >
+                    Select Files
+                </button>
+            </li>
 
-            &nbsp;
-
-            <button
-                v-show="$upload.meta('demo-multi').state === 'complete'"
-                @click="$upload.reset('demo-multi')"
-            >
-                Reset
-            </button>
-        </div>
+            <li>
+                <button
+                    v-show="$upload.meta('demo-multi').state === 'complete'"
+                    @click="$upload.reset('demo-multi')"
+                >
+                    Reset
+                </button>
+            </li>
+        </ul>
 
         <ul class="spacer">
             <li v-for="file in files">
@@ -48,7 +50,7 @@
 
         <div
             v-for="error in errors"
-            style="color:red;"
+            class="text-danger"
         >
             {{ error.msg }}
         </div>
@@ -102,9 +104,7 @@
 
         <hr/>
 
-        <div
-            id="dropzone"
-        >
+        <div id="dropzone">
             (drop files here to upload)
         </div>
     </div>
