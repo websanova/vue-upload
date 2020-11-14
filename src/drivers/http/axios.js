@@ -1,9 +1,9 @@
 export default {
     post: function(data) {
-        var cancelTokenSource = this.ctx.axios.CancelToken.source();
+        var cancelTokenSource = this.plugins.http.CancelToken.source();
         
-        this.ctx
-            .axios
+        this.plugins
+            .http
             .post(data.url, data.body, {
                 onUploadProgress: data.progress,
                 cancelToken: cancelTokenSource.token,

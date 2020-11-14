@@ -2,7 +2,7 @@ export default {
     post: function(data) {
         var request = {};
 
-        this.ctx
+        this.plugins
             .http
             .post(data.url, data.body, {
                 progress: data.progress,
