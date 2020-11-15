@@ -111,40 +111,40 @@
 </template>
 
 <script>
-    import {reactive          } from 'vue';
-    import {computed          } from 'vue';
-    import {onMounted         } from 'vue';
-    import {onBeforeUnmount   } from 'vue';
-    import {getCurrentInstance} from 'vue';
+    import {reactive       } from 'vue';
+    import {computed       } from 'vue';
+    import {onMounted      } from 'vue';
+    import {onBeforeUnmount} from 'vue';
+    import {useUpload      } from '@websanova/vue-upload/src/v3.js';
 
     export default {
         setup() {
-            const ctx = getCurrentInstance().ctx;
+            const upload = useUpload();
 
             const state = reactive({
                 files: [],
                 errors: [],
                 _files: computed(() => {
-                    return ctx.$upload.files('demo-multi');
+                    return upload.files('demo-multi');
                 }),
                 _meta: computed(() => {
-                    return ctx.$upload.meta('demo-multi');
+                    return upload.meta('demo-multi');
                 })
             });
 
             function select() {
-                ctx.$upload.select('demo-multi');
+                upload.select('demo-multi');
             }
 
             function reset() {
-                ctx.$upload.reset('demo-multi');
+                upload.reset('demo-multi');
             }
 
             onMounted(() => {
                 // NOTE: Important to do dropzoneId on mounted
                 //       otherwise it won't find the element.
 
-                ctx.$upload.on('demo-multi', {
+                upload.on('demo-multi', {
                     url: 'demos/image',
                     accept: 'image/*',
                     multiple: true,
@@ -165,12 +165,12 @@
                         }
 
                         // Add some additional data to the request.
-                        ctx.$upload.option('demo-multi', 'body', {
+                        upload.option('demo-multi', 'body', {
                             some_id: 1
                         });
 
-                        console.log(ctx.$upload.meta('demo-multi'))
-                        console.log(ctx.$upload.errors('demo-multi'))
+                        console.log(upload.meta('demo-multi'))
+                        console.log(upload.errors('demo-multi'))
                     },
                     onProgress(file, res) {
                         console.log('onProgress');
@@ -198,7 +198,7 @@
             });
 
             onBeforeUnmount(() => {
-                ctx.$upload.off('demo-multi');
+                upload.off('demo-multi');
             });
 
             return {

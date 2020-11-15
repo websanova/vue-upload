@@ -45,22 +45,22 @@
 </template>
 
 <script>
-    import {reactive          } from 'vue';
-    import {computed          } from 'vue';
-    import {onMounted         } from 'vue';
-    import {onBeforeUnmount   } from 'vue';
-    import {getCurrentInstance} from 'vue';
+    import {reactive       } from 'vue';
+    import {computed       } from 'vue';
+    import {onMounted      } from 'vue';
+    import {onBeforeUnmount} from 'vue';
+    import {useUpload      } from '@websanova/vue-upload/src/v3.js';
 
     export default {
         setup() {
-            const ctx = getCurrentInstance().ctx;
+            const upload = useUpload();
 
             const state = reactive({
                 file: {
                     image: null
                 },
                 _file: computed(() => {
-                    return ctx.$upload.file('demo-single');
+                    return upload.file('demo-single');
                 }),
                 _image: computed(() => {
                     return state.file.image || '//www.gravatar.com/avatar/?d=robohash&s=320';
@@ -68,15 +68,15 @@
             });
 
             function select() {
-                ctx.$upload.select('demo-single');
+                upload.select('demo-single');
             }
 
             function start() {
-                ctx.$upload.start('demo-single');
+                upload.start('demo-single');
             }
 
             onMounted(() => {
-                ctx.$upload.on('demo-single', {
+                upload.on('demo-single', {
                     url: 'demos/image',
                     accept: 'image/*',
                     startOnSelect: false,
@@ -87,12 +87,12 @@
                         console.log(files);
 
                         // Add some additional data to the request.
-                        ctx.$upload.option('demo-single', 'body', {
+                        upload.option('demo-single', 'body', {
                             some_id: 1
                         });
 
                         // Load a preview first.
-                        ctx.$upload.file('demo-single').preview((file) => {
+                        upload.file('demo-single').preview((file) => {
                             state.file.image = file.$raw;
                         });
                     },
@@ -122,7 +122,7 @@
             });
 
             onBeforeUnmount(() => {
-                ctx.$upload.off('demo-single');
+                upload.off('demo-single');
             });
 
             return {
