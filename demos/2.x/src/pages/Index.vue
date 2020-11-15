@@ -1,6 +1,6 @@
 <template>
     <el-layout
-        title="Vue Upload 3.x Demo"
+        title="Vue Upload 2.x Demo"
         package="vue-upload"
         :links="[{
             to: {name: 'site-single'},
