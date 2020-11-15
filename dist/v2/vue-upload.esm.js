@@ -1,5 +1,5 @@
 /*!
- * @websanova/vue-upload v1.8.1
+ * @websanova/vue-upload v2.0.0
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */
@@ -62,20 +62,20 @@ function __parseErrors(res) {
 }
 
 function __http(data) {
-  if (!__upload.http) {
+  if (!__upload.drivers.http) {
     console.error('VueUpload: http driver has not been set.');
     return;
   }
 
-  return __upload.http.post.call(__upload, data);
+  return __upload.drivers.http.post.call(__upload, data);
 }
 
 function _create(name) {
-  if (__upload.instances[name]) {
+  if (__upload.state.instances[name]) {
     return;
   }
 
-  __upload.Vue.set(__upload.$vm.instances, name, {
+  __upload.Vue.set(__upload.$vm.state.instances, name, {
     files: {
       all: [],
       queue: [],
@@ -94,9 +94,9 @@ function _create(name) {
     }
   });
 
-  __upload.instances[name] = {
+  __upload.state.instances[name] = {
     key: name,
-    $vm: __upload.$vm.instances[name]
+    $vm: __upload.$vm.state.instances[name]
   };
 }
 
@@ -126,7 +126,7 @@ function _reset() {
 }
 
 function _init(name, options) {
-  var instance = __upload.instances[name];
+  var instance = __upload.state.instances[name];
   instance.options = Object.assign({}, __upload.options, options);
   instance.input = _initInput.call(instance);
   instance.dropzone = _initDropzone.call(instance);
@@ -166,14 +166,14 @@ function _option(key, val) {
 }
 
 function _destroy(name) {
-  var instance = __upload.instances[name];
+  var instance = __upload.state.instances[name];
 
   _destroyInput.call(instance);
 
   _destroyDropzone.call(instance);
 
   delete instance.$vm;
-  delete __upload.instances[name];
+  delete __upload.state.instances[name];
 }
 
 function _initInput() {
@@ -607,20 +607,25 @@ function _percent() {
 }
 
 function Upload(Vue, options) {
-  // Init driver
-  this.http = options.http;
-  delete options.http;
-  this.options = Object.assign({}, __defaultOptions, options); // this.Vue = Vue;
+  __upload = this;
+  options = options || {};
+  this.plugins = options.plugins;
+  this.drivers = options.drivers;
+  this.options = Object.assign({}, __defaultOptions, options);
+  delete options.plugins;
+  delete options.drivers;
+  delete options.options; //
 
   this.$vm = new Vue({
     data: function () {
       return {
-        instances: {}
+        state: {
+          instances: {}
+        }
       };
     }
   });
-  this.instances = {};
-  __upload = this;
+  this.state.instances = {};
 }
 
 Upload.prototype.on = function (name, options) {
@@ -631,31 +636,28 @@ Upload.prototype.on = function (name, options) {
 
 Upload.prototype.off = function (name) {
   _destroy(name);
-}; // Upload.prototype.bind = function (name) {
-//     _bind.call(__upload.instances[name], this);
-// };
-
+};
 
 Upload.prototype.reset = function (name) {
   _create(name);
 
-  _reset.call(__upload.instances[name]);
+  _reset.call(__upload.state.instances[name]);
 };
 
 Upload.prototype.select = function (name) {
-  __upload.instances[name].input.$el.click();
+  __upload.state.instances[name].input.$el.click();
 };
 
 Upload.prototype.start = function (name) {
   _create(name);
 
-  _process.call(__upload.instances[name]);
+  _process.call(__upload.state.instances[name]);
 };
 
 Upload.prototype.files = function (name) {
   _create(name);
 
-  return __upload.instances[name].$vm.files;
+  return __upload.state.instances[name].$vm.files;
 };
 
 Upload.prototype.file = function (name) {
@@ -663,51 +665,50 @@ Upload.prototype.file = function (name) {
 
   _create(name);
 
-  vm = __upload.instances[name].$vm;
+  vm = __upload.state.instances[name].$vm;
   return vm.files.all[vm.files.all.length - 1] || {
     error: {}
   };
 };
 
 Upload.prototype.exists = function (name) {
-  return __upload.instances[name] ? true : false;
+  return __upload.state.instances[name] ? true : false;
 };
 
 Upload.prototype.meta = function (name) {
   _create(name);
 
-  return __upload.instances[name].$vm.meta;
+  return __upload.state.instances[name].$vm.meta;
 };
 
 Upload.prototype.percent = function (name) {
   _create(name);
-
-  return __upload.instances[name].$vm.meta.percentComplete;
+  return __upload.state.instances[name].$vm.meta.percentComplete;
 };
 
 Upload.prototype.state = function (name) {
   _create(name);
 
-  return __upload.instances[name].$vm.meta.state;
+  return __upload.state.instances[name].$vm.meta.state;
 };
 
 Upload.prototype.dropzone = function (name) {
   _create(name);
 
-  return __upload.instances[name].$vm.dropzone;
+  return __upload.state.instances[name].$vm.dropzone;
 };
 
 Upload.prototype.option = function (name, key, val) {
   _create(name);
 
-  _option.call(__upload.instances[name], key, val); // _bind.call(__upload.instances[name], this);
+  _option.call(__upload.state.instances[name], key, val); // _bind.call(__upload.state.instances[name], this);
 
 };
 
 Upload.prototype.errors = function (name) {
   _create(name);
 
-  return __upload.instances[name].$vm.errors;
+  return __upload.state.instances[name].$vm.errors;
 };
 
 function plugin(Vue, options) {
