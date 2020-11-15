@@ -10,10 +10,10 @@
         "username": "websanova",
         "email": "rob@websanova.com"
     },
-    "main": "dist/v2/vue-upload.cjs.js",
-    "module": "dist/v2/vue-upload.esm.js",
-    "unpkg": "dist/v2/vue-upload.min.js",
-    "jsdelivr": "dist/v2/vue-upload.min.js",
+    "main": "dist/v3/vue-upload.cjs.js",
+    "module": "dist/v3/vue-upload.esm.js",
+    "unpkg": "dist/v3/vue-upload.min.js",
+    "jsdelivr": "dist/v3/vue-upload.min.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/websanova/vue-upload"
