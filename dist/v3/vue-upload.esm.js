@@ -1,10 +1,10 @@
 /*!
- * @websanova/vue-upload v2.0.0
+ * @websanova/vue-upload v2.0.1
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */
 
-import { reactive } from 'vue';
+import { inject, reactive } from 'vue';
 
 var __upload = null;
 var __defaultOptions = {

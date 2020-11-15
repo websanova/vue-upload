@@ -1,5 +1,5 @@
 /*!
- * @websanova/vue-upload v2.0.0
+ * @websanova/vue-upload v2.0.1
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */
@@ -739,7 +739,7 @@ function createUpload(options) {
   return new Upload(Vue, options);
 }
 function useUpload(key) {
-  return inject(key ? key : uploadKey);
+  return vue.inject(key ? key : uploadKey);
 }
 
 exports.createUpload = createUpload;
