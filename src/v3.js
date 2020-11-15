@@ -1,3 +1,4 @@
+import {inject  } from 'vue';
 import {reactive} from 'vue';
 import Upload     from './upload.js';
 
