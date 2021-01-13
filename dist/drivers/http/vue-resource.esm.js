@@ -1,18 +1,22 @@
 /*!
- * @websanova/vue-upload v2.0.1
+ * @websanova/vue-upload v2.1.0
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */
 
 var vueResource = {
-  post: function (data) {
+  call: function (data) {
     var request = {};
-    this.plugins.http.post(data.url, data.body, {
+    this.plugins.http(Object.assign({
+      url: data.url,
+      method: data.method || 'post',
+      body: data.body,
+      params: data.method === 'get' ? data.body : null,
       progress: data.progress,
       before: function (req) {
         request = req;
       }
-    }).then(data.success, data.error);
+    }, data)).then(data.success, data.error);
     return request;
   }
 };

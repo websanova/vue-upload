@@ -1,5 +1,5 @@
 /*!
- * @websanova/vue-upload v2.0.1
+ * @websanova/vue-upload v2.1.0
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */
@@ -9,6 +9,7 @@
 var __upload = null;
 var __defaultOptions = {
   url: null,
+  preFetchUrl: false,
   name: 'file',
   accept: null,
   body: {},
@@ -17,6 +18,7 @@ var __defaultOptions = {
   onStart: null,
   onQueue: null,
   onProgress: null,
+  onPrefetchUrl: null,
   onUpload: null,
   onError: null,
   onSuccess: null,
@@ -69,7 +71,7 @@ function __http(data) {
     return;
   }
 
-  return __upload.drivers.http.post.call(__upload, data);
+  return __upload.drivers.http.call.call(__upload, data);
 }
 
 function _create(name) {
@@ -144,6 +146,8 @@ function _bind() {
   this.onQueue = this.options.onQueue || function () {};
 
   this.onProgress = this.options.onProgress || function () {};
+
+  this.onPrefetchUrl = this.options.onPrefetchUrl || function () {};
 
   this.onUpload = this.options.onUpload || function () {};
 
@@ -535,58 +539,84 @@ function _upload(file) {
 
   _move.call(this, file, 'progress');
 
-  formData = new FormData();
-  formData.append(this.options.name, file.$file);
+  new Promise(function (resolve, reject) {
+    if (file.$instance.options.preFetchUrl) {
+      request = _this.options.http({
+        method: 'get',
+        url: file.$instance.options.url,
+        error: reject,
+        body: {
+          name: file.name,
+          type: file.type
+        },
+        success: function (res) {
+          var data = {};
 
-  for (key in file.$instance.options.body) {
-    formData.append(key, file.$instance.options.body[key]);
-  }
+          if (file.$instance.options.onPrefetchUrl) {
+            data = file.$instance.options.onPrefetchUrl(res) || {};
+          }
 
-  request = this.options.http({
-    url: file.$instance.options.url,
-    body: formData,
-    progress: function (e) {
-      file.percentComplete = e.lengthComputable ? Math.ceil(e.loaded / e.total * 100) : 0;
-
-      _this.onProgress(file, e);
-
-      if (file.percentComplete >= 100) {
-        _move.call(_this, file, 'upload');
-
-        _this.onUpload(file, e);
-      }
-
-      _percent.call(_this);
-    },
-    success: function (res) {
-      file.sending = false;
-
-      _move.call(_this, file, 'success');
-
-      _this.onSuccess(file, res);
-
-      _this.onComplete(file, res);
-
-      _process.call(_this);
-    },
-    error: function (res) {
-      var error;
-      file.sending = false;
-      error = _this.options.parseErrors(res);
-      error.file = file;
-
-      _addError.call(_this, error);
-
-      _move.call(_this, file, 'error');
-
-      _this.onError(file, res);
-
-      _this.onComplete(file, res);
-
-      _process.call(_this);
+          resolve(data);
+        }
+      });
+      file.$request = request;
+    } else {
+      resolve({});
     }
+  }).then(function (data) {
+    formData = new FormData();
+    formData.append(_this.options.name, file.$file);
+
+    for (key in file.$instance.options.body) {
+      formData.append(key, file.$instance.options.body[key]);
+    }
+
+    request = _this.options.http(Object.assign({
+      url: file.$instance.options.url,
+      body: formData,
+      progress: function (e) {
+        file.percentComplete = e.lengthComputable ? Math.ceil(e.loaded / e.total * 100) : 0;
+
+        _this.onProgress(file, e);
+
+        if (file.percentComplete >= 100) {
+          _move.call(_this, file, 'upload');
+
+          _this.onUpload(file, e);
+        }
+
+        _percent.call(_this);
+      },
+      success: function (res) {
+        file.sending = false;
+
+        _move.call(_this, file, 'success');
+
+        _this.onSuccess(file, res);
+
+        _this.onComplete(file, res);
+
+        _process.call(_this);
+      },
+      error: function (res) {
+        var error;
+        file.sending = false;
+        error = _this.options.parseErrors(res);
+        error.file = file;
+
+        _addError.call(_this, error);
+
+        _move.call(_this, file, 'error');
+
+        _this.onError(file, res);
+
+        _this.onComplete(file, res);
+
+        _process.call(_this);
+      }
+    }, data));
+    file.$request = request;
   });
-  file.$request = request;
 }
 
 function _percent() {
