@@ -570,7 +570,7 @@ function _upload(file) {
 
     new Promise(function (resolve, reject) {
         if (file.$instance.options.preFetchUrl) {
-            request = _this.options.http({
+            request = _this.options.http(Object.assign({
                 method: 'get',
                 url: file.$instance.options.url,
                 error: reject,
@@ -588,7 +588,7 @@ function _upload(file) {
 
                     resolve(data);
                 }
-            });
+            }, file.$instance.options.httpOptions));
 
             file.$request = request;
         }

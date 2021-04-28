@@ -1,5 +1,5 @@
 /*!
- * @websanova/vue-upload v2.1.2
+ * @websanova/vue-upload v2.1.4
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */
@@ -546,7 +546,7 @@
 
       new Promise(function (resolve, reject) {
         if (file.$instance.options.preFetchUrl) {
-          request = _this.options.http({
+          request = _this.options.http(Object.assign({
             method: 'get',
             url: file.$instance.options.url,
             error: reject,
@@ -564,7 +564,7 @@
 
               resolve(data);
             }
-          });
+          }, file.$instance.options.httpOptions));
           file.$request = request;
         } else {
           resolve({});
