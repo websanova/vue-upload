@@ -576,6 +576,7 @@ function _upload(file) {
                 body: {
                     name: file.name,
                     type: file.type,
+                    extension: file.extension
                 },
                 success: function (res) {
                     var data = {};

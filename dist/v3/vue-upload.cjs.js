@@ -1,5 +1,5 @@
 /*!
- * @websanova/vue-upload v2.1.0
+ * @websanova/vue-upload v2.1.1
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */
@@ -551,7 +551,8 @@ function _upload(file) {
         error: reject,
         body: {
           name: file.name,
-          type: file.type
+          type: file.type,
+          extension: file.extension
         },
         success: function (res) {
           var data = {};
