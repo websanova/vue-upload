@@ -1,5 +1,5 @@
 /*!
- * @websanova/vue-upload v2.1.1
+ * @websanova/vue-upload v2.1.2
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */
@@ -17,6 +17,7 @@
       name: 'file',
       accept: null,
       body: {},
+      httpOptions: {},
       dropzoneId: null,
       onSelect: null,
       onStart: null,
@@ -619,7 +620,7 @@
 
             _process.call(_this);
           }
-        }, data));
+        }, file.$instance.options.httpOptions, data));
         file.$request = request;
       });
     }

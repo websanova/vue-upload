@@ -6,6 +6,7 @@ var __defaultOptions = {
     name: 'file',
     accept: null,
     body: {},
+    httpOptions: {},
     dropzoneId: null,
     onSelect: null,
     onStart: null,
@@ -649,7 +650,7 @@ function _upload(file) {
 
                 _process.call(_this);
             }
-        }, data));
+        }, file.$instance.options.httpOptions, data));
 
         file.$request = request;
     });
