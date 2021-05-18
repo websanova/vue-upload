@@ -779,9 +779,11 @@ Upload.prototype.dropzone = function (name) {
 Upload.prototype.option = function (name, key, val) {
     _create(name);
 
-    _option.call(__upload.state.instances[name], key, val);
+    if (val !== undefined) {
+        _option.call(__upload.state.instances[name], key, val);
+    }
 
-    // _bind.call(__upload.state.instances[name], this);
+    return __upload.state.instances[name].options[key];
 };
 
 Upload.prototype.errors = function (name) {

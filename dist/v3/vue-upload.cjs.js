@@ -1,5 +1,5 @@
 /*!
- * @websanova/vue-upload v2.1.4
+ * @websanova/vue-upload v2.1.5
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */
@@ -739,8 +739,11 @@ Upload.prototype.dropzone = function (name) {
 Upload.prototype.option = function (name, key, val) {
   _create(name);
 
-  _option.call(__upload.state.instances[name], key, val); // _bind.call(__upload.state.instances[name], this);
+  if (val !== undefined) {
+    _option.call(__upload.state.instances[name], key, val);
+  }
 
+  return __upload.state.instances[name].options[key];
 };
 
 Upload.prototype.errors = function (name) {
