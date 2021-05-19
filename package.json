@@ -1,5 +1,5 @@
 {
-    "version": "2.1.5",
+    "version": "2.1.6",
     "name": "@websanova/vue-upload",
     "description": "A simple, light weight and intuitive upload control for Vue.js.",
     "keywords": ["vue", "vue.js", "vuejs", "plugin", "file", "image", "img", "audio", "png", "jpeg", "upload", "dropzone"],

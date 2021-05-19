@@ -1,5 +1,5 @@
 /*!
- * @websanova/vue-upload v2.1.5
+ * @websanova/vue-upload v2.1.6
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */
@@ -32,6 +32,7 @@ var __defaultOptions = {
   startOnSelect: true,
   extensions: ['jpeg', 'jpg', 'png', 'gif'],
   multiple: false,
+  sendAsMultipart: true,
   maxFilesSelect: 4,
   maxFilesInProgress: 2,
   maxSizePerFile: 1024 * 1024 * 2,
@@ -536,7 +537,6 @@ function _process() {
 
 function _upload(file) {
   var key,
-      formData,
       request,
       _this = this;
 
@@ -570,11 +570,17 @@ function _upload(file) {
       resolve({});
     }
   }).then(function (data) {
-    formData = new FormData();
-    formData.append(_this.options.name, file.$file);
+    var formData;
 
-    for (key in file.$instance.options.body) {
-      formData.append(key, file.$instance.options.body[key]);
+    if (_this.options.sendAsMultipart === true) {
+      formData = new FormData();
+      formData.append(_this.options.name, file.$file);
+
+      for (key in file.$instance.options.body) {
+        formData.append(key, file.$instance.options.body[key]);
+      }
+    } else {
+      formData = file.$file;
     }
 
     request = _this.options.http(Object.assign({

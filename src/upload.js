@@ -21,6 +21,7 @@ var __defaultOptions = {
     startOnSelect: true,
     extensions: ['jpeg', 'jpg', 'png', 'gif'],
     multiple: false,
+    sendAsMultipart: true,
     maxFilesSelect: 4,
     maxFilesInProgress: 2,
     maxSizePerFile: 1024 * 1024 * 2, // MB
@@ -560,7 +561,6 @@ function _process() {
 
 function _upload(file) {
     var key,
-        formData,
         request,
         _this = this;
 
@@ -597,12 +597,19 @@ function _upload(file) {
         }
     })
     .then(function (data) {
-        formData = new FormData();
+        var formData;
+
+        if (_this.options.sendAsMultipart === true) {
+            formData = new FormData();
+                
+            formData.append(_this.options.name, file.$file);
             
-        formData.append(_this.options.name, file.$file);
-        
-        for (key in file.$instance.options.body) {
-            formData.append(key, file.$instance.options.body[key]);
+            for (key in file.$instance.options.body) {
+                formData.append(key, file.$instance.options.body[key]);
+            }
+        }
+        else {
+            formData = file.$file;
         }
 
         request = _this.options.http(Object.assign({
