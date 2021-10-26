@@ -132,7 +132,7 @@ function _reset() {
 function _init(name, options) {
     var instance = __upload.state.instances[name];
 
-    instance.options = Object.assign({}, __upload.options, options);
+    instance.options = Object.assign({}, __upload.$options, options);
 
     instance.input = _initInput.call(instance);
     
@@ -692,7 +692,7 @@ function Upload(Vue, options) {
     
     this.plugins = options.plugins;
     this.drivers = options.drivers;
-    this.options = Object.assign({}, __defaultOptions, options);
+    this.$options = Object.assign({}, __defaultOptions, options);
 
     delete options.plugins;
     delete options.drivers;
@@ -790,7 +790,19 @@ Upload.prototype.option = function (name, key, val) {
         _option.call(__upload.state.instances[name], key, val);
     }
 
+    _bind.call(__upload.state.instances[name]);
+
     return __upload.state.instances[name].options[key];
+};
+
+Upload.prototype.options = function (name, options) {
+    _create(name);
+
+    for (const [key, val] of Object.entries(options)) {
+        _option.call(__upload.state.instances[name], key, val);
+    }
+
+    _bind.call(__upload.state.instances[name]);
 };
 
 Upload.prototype.errors = function (name) {
