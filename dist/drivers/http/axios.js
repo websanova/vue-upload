@@ -1,5 +1,5 @@
 /*!
- * @websanova/vue-upload v2.1.9
+ * @websanova/vue-upload v2.2.0
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */
@@ -13,8 +13,8 @@
     var axios = {
       call: function (data) {
         var url = data.url,
-            body = data.body,
-            cancelTokenSource = this.plugins.http.CancelToken.source();
+          body = data.body,
+          cancelTokenSource = this.plugins.http.CancelToken.source();
         delete data.url;
         delete data.body;
         this.plugins.http[data.method || 'post'](url, body, Object.assign({

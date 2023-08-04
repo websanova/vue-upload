@@ -783,6 +783,12 @@ Upload.prototype.dropzone = function (name) {
     return __upload.state.instances[name].$vm.dropzone;
 };
 
+Upload.prototype.dropzoneDestroy = function (name) {
+    _create(name);
+
+    return _destroyDropzone.call(__upload.state.instances[name]);
+};
+
 Upload.prototype.option = function (name, key, val) {
     _create(name);
 
