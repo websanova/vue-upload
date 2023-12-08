@@ -616,7 +616,7 @@ function _upload(file) {
             url: file.$instance.options.url,
             body: formData,
             progress: function (e) {
-                file.percentComplete = e.lengthComputable ? Math.ceil(e.loaded / e.total * 100) : 0;
+                file.percentComplete = (e.loaded && e.total) ? Math.ceil(e.loaded / e.total * 100) : 0;
 
                 _this.onProgress(file, e);
 
