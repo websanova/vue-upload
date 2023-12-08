@@ -1,5 +1,5 @@
 /*!
- * @websanova/vue-upload v2.2.0
+ * @websanova/vue-upload v2.2.1
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */
@@ -483,7 +483,7 @@ function _upload(file) {
       url: file.$instance.options.url,
       body: formData,
       progress: function (e) {
-        file.percentComplete = e.lengthComputable ? Math.ceil(e.loaded / e.total * 100) : 0;
+        file.percentComplete = e.loaded && e.total ? Math.ceil(e.loaded / e.total * 100) : 0;
         _this.onProgress(file, e);
         if (file.percentComplete >= 100) {
           _move.call(_this, file, 'upload');
