@@ -1,5 +1,5 @@
 /*!
- * @websanova/vue-upload v2.2.1
+ * @websanova/vue-upload v2.3.0
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */
@@ -15,6 +15,7 @@ var __defaultOptions = {
   body: {},
   httpOptions: {},
   dropzoneId: null,
+  onDismiss: null,
   onSelect: null,
   onStart: null,
   onQueue: null,
@@ -125,6 +126,7 @@ function _init(name, options) {
   _bind.call(instance);
 }
 function _bind() {
+  this.onDismiss = this.options.onDismiss || function () {};
   this.onSelect = this.options.onSelect || function () {};
   this.onStart = this.options.onStart || function () {};
   this.onQueue = this.options.onQueue || function () {};
@@ -161,7 +163,6 @@ function _initInput() {
   input.style.display = 'none';
   input.onchange = function () {
     _select.call(_this, input.files);
-    input.value = null;
   };
   document.body.appendChild(input);
   return {
@@ -173,6 +174,21 @@ function _destroyInput() {
     this.input.$el.parentNode.removeChild(this.input.$el);
     this.input.$el = null;
   }
+}
+function _dismiss() {
+  var _this = this;
+  function onFocus() {
+    setTimeout(function () {
+      if (_this.onDismiss && !_this.input.$el.files.length) {
+        _this.onDismiss();
+      }
+      if (_this.input.$el.files.length) {
+        _this.input.$el.value = null;
+      }
+    }, 250);
+    window.removeEventListener('focus', onFocus);
+  }
+  window.addEventListener('focus', onFocus);
 }
 function _initDropzone() {
   var dropzone,
@@ -558,6 +574,7 @@ Upload.prototype.reset = function (name) {
   _reset.call(__upload.state.instances[name]);
 };
 Upload.prototype.select = function (name) {
+  _dismiss.call(__upload.state.instances[name]);
   __upload.state.instances[name].input.$el.click();
 };
 Upload.prototype.start = function (name) {
