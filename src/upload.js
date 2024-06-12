@@ -8,6 +8,7 @@ var __defaultOptions = {
     body: {},
     httpOptions: {},
     dropzoneId: null,
+    onDismiss: null,
     onSelect: null,
     onStart: null,
     onQueue: null,
@@ -142,6 +143,7 @@ function _init(name, options) {
 }
 
 function _bind() {
+    this.onDismiss = this.options.onDismiss || function () {};
     this.onSelect = this.options.onSelect || function () {};
     this.onStart = this.options.onStart || function () {};
     this.onQueue = this.options.onQueue || function () {};
@@ -194,8 +196,6 @@ function _initInput() {
     
     input.onchange = function () {
         _select.call(_this, input.files);
-
-        input.value = null;
     };
 
     document.body.appendChild(input);
@@ -214,6 +214,29 @@ function _destroyInput() {
 
         this.input.$el = null;
     }
+}
+
+function _dismiss() {
+    var _this = this;
+
+    function onFocus() {
+        setTimeout(function () {
+            if (
+                _this.onDismiss &&
+                !_this.input.$el.files.length
+            ) {
+                _this.onDismiss();
+            }
+
+            if (_this.input.$el.files.length) {
+                _this.input.$el.value = null;
+            }
+        }, 250)
+
+        window.removeEventListener('focus', onFocus);
+    }
+
+    window.addEventListener('focus', onFocus);
 }
 
 function _initDropzone() {
@@ -730,6 +753,8 @@ Upload.prototype.reset = function (name) {
 };
 
 Upload.prototype.select = function (name) {
+    _dismiss.call(__upload.state.instances[name]);
+
     __upload.state.instances[name].input.$el.click();
 };
 
