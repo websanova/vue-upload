@@ -19,6 +19,7 @@ var __defaultOptions = {
     onSuccess: null,
     onComplete: null,
     onEnd: null,
+    onValidate: null,
     startOnSelect: true,
     extensions: ['jpeg', 'jpg', 'png', 'gif'],
     multiple: false,
@@ -136,7 +137,7 @@ function _init(name, options) {
     instance.options = Object.assign({}, __upload.$options, options);
 
     instance.input = _initInput.call(instance);
-    
+
     instance.dropzone = _initDropzone.call(instance);
 
     _bind.call(instance);
@@ -154,11 +155,12 @@ function _bind() {
     this.onSuccess = this.options.onSuccess || function () {};
     this.onComplete = this.options.onComplete || function () {};
     this.onEnd = this.options.onEnd || function () {};
+    this.onValidate = this.options.onValidate || function () {};
 }
 
 function _option(key, val) {
     this.options[key] = val;
-    
+
     if (key === 'dropzone') {
         _destroyDropzone.call(this);
 
@@ -193,7 +195,7 @@ function _initInput() {
     input.accept = this.options.accept ? this.options.accept : "*/*";
 
     input.style.display = 'none';
-    
+
     input.onchange = function () {
         _select.call(_this, input.files);
     };
@@ -242,7 +244,7 @@ function _dismiss() {
 function _initDropzone() {
     var dropzone,
         _this = this;
-        
+
     dropzone = {
         $el: document.getElementById(this.options.dropzoneId),
         counter: 0,
@@ -255,17 +257,17 @@ function _initDropzone() {
     if (dropzone.$el) {
         dropzone.dragenter = function(e) {
             __stop(e);
-            
+
             _this.dropzone.counter++;
-            
+
             _this.$vm.dropzone.active = true;
         };
 
         dropzone.dragover = function(e) {
             __stop(e);
-            
-            e.dataTransfer.dropEffect = 'copy'; 
-            
+
+            e.dataTransfer.dropEffect = 'copy';
+
             _this.$vm.dropzone.active = true;
         };
 
@@ -519,6 +521,17 @@ function _valid(file) {
             code: 'file-max-size',
             msg: this.options.maxFileSizeMsg.replace('{max}', Math.floor(this.options.maxSizePerFile / 1024 / 1024))
         };
+    }
+    else if (this.options.onValidate) {
+        var msg = this.options.onValidate(file)
+
+        if (msg) {
+            error = {
+                file: file,
+                code: 'file-validate',
+                msg
+            }
+        }
     }
 
     if (error) {
