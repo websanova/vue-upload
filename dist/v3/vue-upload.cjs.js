@@ -1,5 +1,5 @@
 /*!
- * @websanova/vue-upload v2.3.0
+ * @websanova/vue-upload v2.4.0
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */
@@ -30,6 +30,7 @@ var __defaultOptions = {
   onSuccess: null,
   onComplete: null,
   onEnd: null,
+  onValidate: null,
   startOnSelect: true,
   extensions: ['jpeg', 'jpg', 'png', 'gif'],
   multiple: false,
@@ -141,6 +142,7 @@ function _bind() {
   this.onSuccess = this.options.onSuccess || function () {};
   this.onComplete = this.options.onComplete || function () {};
   this.onEnd = this.options.onEnd || function () {};
+  this.onValidate = this.options.onValidate || function () {};
 }
 function _option(key, val) {
   this.options[key] = val;
@@ -414,6 +416,15 @@ function _valid(file) {
       code: 'file-max-size',
       msg: this.options.maxFileSizeMsg.replace('{max}', Math.floor(this.options.maxSizePerFile / 1024 / 1024))
     };
+  } else if (this.options.onValidate) {
+    var msg = this.options.onValidate(file);
+    if (msg) {
+      error = {
+        file: file,
+        code: 'file-validate',
+        msg
+      };
+    }
   }
   if (error) {
     _addError.call(this, error);
