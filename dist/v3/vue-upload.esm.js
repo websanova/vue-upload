@@ -1,5 +1,5 @@
 /*!
- * @websanova/vue-upload v2.4.0
+ * @websanova/vue-upload v2.4.1
  * https://websanova.com/docs/vue-upload
  * Released under the MIT License.
  */
@@ -187,9 +187,11 @@ function _dismiss() {
       if (_this.input.$el.files.length) {
         _this.input.$el.value = null;
       }
-    }, 250);
+    }, 500);
+    _this.input.$el.removeEventListener('cancel', onFocus);
     window.removeEventListener('focus', onFocus);
   }
+  _this.input.$el.addEventListener('cancel', onFocus);
   window.addEventListener('focus', onFocus);
 }
 function _initDropzone() {
