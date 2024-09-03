@@ -233,11 +233,13 @@ function _dismiss() {
             if (_this.input.$el.files.length) {
                 _this.input.$el.value = null;
             }
-        }, 250)
+        }, 500)
 
+        _this.input.$el.removeEventListener('cancel', onFocus)
         window.removeEventListener('focus', onFocus);
     }
 
+    _this.input.$el.addEventListener('cancel', onFocus)
     window.addEventListener('focus', onFocus);
 }
 
