@@ -9,13 +9,7 @@ A simple, light weight and intuitive upload control for Vue.js.
 
 If you like this plugin please consider sponsoring.
 
-* [GitHub](https://github.com/sponsors/websanova)
 * [Patreon](https://patreon.com/websanova)
-
-
-## Demo
-
-Check the [live demo](https://vue-upload.websanova.com) to see vue-upload in action.
 
 
 ## Issues
